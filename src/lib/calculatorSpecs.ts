@@ -278,7 +278,7 @@ export const CALCULATOR_SPECS = [
     faqs: [
       {
         question: "What is FICA tax?",
-        answer: "FICA stands for the Federal Insurance Contributions Act. It is a mandatory payroll tax that funds Social Security and Medicare. In 2024, the total FICA tax rate is 15.3% (7.65% paid by the employee and 7.65% by the employer)."
+        answer: "FICA stands for the Federal Insurance Contributions Act. It is a mandatory payroll tax that funds Social Security and Medicare. The total FICA tax rate is 15.3% — 7.65% paid by the employee and 7.65% matched by the employer."
       }
     ],
     related: ['take-home-pay', 'after-tax-income', 'salary-to-hourly', 'hourly-to-salary', 'overtime', 'biweekly-pay', 'weekly-pay', 'bonus'],
@@ -1548,7 +1548,7 @@ export const CALCULATOR_SPECS = [
       },
       {
         question: "Is there an income limit for self-employment tax?",
-        answer: "Only the Social Security portion (12.4%) has an income limit ($168,600 in 2024). The Medicare portion (2.9%) applies to all your self-employment income, and an additional 0.9% may apply to high earners."
+        answer: "Only the Social Security portion (12.4%) has an income limit (adjusted annually by the SSA). The Medicare portion (2.9%) applies to all your self-employment income, and an additional 0.9% may apply to high earners."
       },
       {
         question: "Can I deduct self-employment tax?",
@@ -1931,6 +1931,37 @@ export const CALCULATOR_SPECS = [
       }
     ],
     related: ['investment-return', 'future-value', 'roi'],
+    generated: true,
+  },
+  {
+    id: 'cd',
+    route: '/cd-calculator',
+    title: 'CD Calculator',
+    description: 'Calculate how much interest you earn on a Certificate of Deposit. Enter your deposit amount, APY, and term to see total interest and final value.',
+    category: 'finance',
+    faqs: [
+      {
+        question: "What is a Certificate of Deposit (CD)?",
+        answer: "A CD is a savings product offered by banks and credit unions that pays a fixed interest rate over a set term (typically 3 months to 5 years). In exchange for locking up your money, you earn a higher rate than a standard savings account. Early withdrawal usually incurs a penalty."
+      },
+      {
+        question: "How is CD interest calculated?",
+        answer: "Most CDs compound interest daily or monthly using the APY (Annual Percentage Yield). The formula is: Final Value = Principal × (1 + APY/100)^Years. The APY already accounts for compounding frequency, so you can use it directly for annual calculations."
+      },
+      {
+        question: "What is the difference between APR and APY for CDs?",
+        answer: "APR (Annual Percentage Rate) is the stated interest rate without compounding. APY (Annual Percentage Yield) reflects the effect of compounding over a year and is always equal to or higher than APR. Banks advertise APY for CDs to show the true earning power — always compare CDs using APY."
+      },
+      {
+        question: "What are CD rates right now?",
+        answer: "CD rates change frequently based on Federal Reserve policy. High-yield online banks and credit unions typically offer the best rates. As of recent Fed tightening cycles, 1-year CD rates have ranged from 4–5% APY at top institutions. Compare current rates at bankrate.com or your local bank."
+      },
+      {
+        question: "What happens if I withdraw from a CD early?",
+        answer: "Early withdrawal penalties vary by bank and CD term. Common penalties: 3 months' interest (short-term CDs) to 12–18 months' interest (long-term CDs). If you think you may need the funds, consider a no-penalty CD or a high-yield savings account instead."
+      }
+    ],
+    related: ['savings', 'compound-interest', 'future-value', 'high-yield-savings'],
     generated: true,
   },
 ] as const satisfies readonly CalculatorSpecShape[];

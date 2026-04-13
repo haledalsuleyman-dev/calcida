@@ -659,3 +659,81 @@ export function AnnuityPayoutCalculator() {
   );
 }
 
+export function CDCalculator() {
+  const [principal, setPrincipal] = useState(10000);
+  const [apy, setApy] = useState(4.75);
+  const [months, setMonths] = useState(12);
+
+  const years = nn(months) / 12;
+  const finalValue = nn(principal) * Math.pow(1 + nn(apy) / 100, years);
+  const totalInterest = finalValue - nn(principal);
+  const effectiveMonthlyRate = Math.pow(1 + nn(apy) / 100, 1 / 12) - 1;
+
+  // Build month-by-month data for first 12 months or all months if shorter
+  const tableMonths = Math.min(nn(months), 24);
+  const rows = Array.from({ length: tableMonths }, (_, i) => {
+    const m = i + 1;
+    const balance = nn(principal) * Math.pow(1 + effectiveMonthlyRate, m);
+    return { month: m, balance, interest: balance - nn(principal) };
+  });
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-12">
+      <div className="lg:col-span-4 space-y-6">
+        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
+          <div>
+            <Label>Deposit Amount ($)</Label>
+            <Input type="number" value={principal} onChange={(e) => setPrincipal(Number(e.target.value))} />
+          </div>
+          <div>
+            <Label>APY (%)</Label>
+            <Input type="number" step="0.01" value={apy} onChange={(e) => setApy(Number(e.target.value))} />
+          </div>
+          <div>
+            <Label>CD Term (months)</Label>
+            <Input type="number" value={months} min={1} max={120} onChange={(e) => setMonths(Number(e.target.value))} />
+          </div>
+        </div>
+      </div>
+      <div className="lg:col-span-8 space-y-6">
+        <div className="bg-blue-50 p-8 rounded-lg border border-blue-100 text-center">
+          <h2 className="text-xl font-semibold text-blue-900 mb-2">Final CD Value</h2>
+          <div className="text-5xl font-bold text-blue-700">{formatCurrency(finalValue)}</div>
+          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+            <div className="text-gray-700">
+              <span className="block font-medium">Total Interest Earned</span>
+              <span className="font-bold text-green-700">{formatCurrency(totalInterest)}</span>
+            </div>
+            <div className="text-gray-700">
+              <span className="block font-medium">APY</span>
+              <span className="font-bold">{fmtPct(nn(apy))}</span>
+            </div>
+          </div>
+        </div>
+        {rows.length > 0 && (
+          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="text-left px-4 py-2 font-medium text-gray-600">Month</th>
+                  <th className="text-right px-4 py-2 font-medium text-gray-600">Balance</th>
+                  <th className="text-right px-4 py-2 font-medium text-gray-600">Interest Earned</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.month} className="border-t border-gray-100">
+                    <td className="px-4 py-2 text-gray-700">{r.month}</td>
+                    <td className="px-4 py-2 text-right font-medium">{formatCurrency(r.balance)}</td>
+                    <td className="px-4 py-2 text-right text-green-700">{formatCurrency(r.interest)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+

@@ -51,3 +51,53 @@ export function breadcrumbListJsonLd(input: { items: { name: string; path: strin
   };
 }
 
+/**
+ * WebSite schema with SearchAction — enables Google Sitelinks Searchbox.
+ * Place this on the homepage once. The urlTemplate must match your search URL pattern.
+ */
+export function websiteJsonLd() {
+  const url = getSiteUrl();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Calcida',
+    url,
+    description:
+      'Free financial calculators for mortgages, loans, salary, taxes, retirement, and more.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url}/calculators?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+/**
+ * Organization schema — strengthens E-E-A-T signals and brand knowledge graph.
+ * Place this on the homepage or globally in the layout.
+ */
+export function organizationJsonLd() {
+  const url = getSiteUrl();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Calcida',
+    url,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${url}/icon.png`,
+    },
+    description:
+      'Calcida provides free, accurate financial calculators for mortgages, loans, salary, retirement, taxes, and personal finance.',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      url: `${url}/contact`,
+    },
+    sameAs: [],
+  };
+}
+

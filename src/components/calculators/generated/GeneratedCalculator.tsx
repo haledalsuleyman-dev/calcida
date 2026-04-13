@@ -7,7 +7,7 @@ import { DownPaymentCalculator, PMICalculator, ClosingCostsCalculator, MortgageP
 import { ARMCalculator, HELOCCalculator, HouseAffordabilityCalculator, InterestOnlyMortgageCalculator, MortgagePayoffCalculator, RentVsBuyCalculator, ReverseMortgageCalculator } from '@/components/calculators/generated/MortgageAdvancedCalculators';
 import { AutoLeaseCalculator, DtiCalculator, ParentPlusLoanCalculator, PaydayLoanCalculator, SimpleInterestLoanCalculator, StudentLoanRefinanceCalculator } from '@/components/calculators/generated/LoanExtraCalculators';
 import { BonusCalculator, CommissionCalculator, OvertimeCalculator, SalaryConversionCalculator, SalaryIncreaseCalculator, SeverancePayCalculator } from '@/components/calculators/generated/SalaryExtraCalculators';
-import { CAGRCalculator, DividendGrowthCalculator, DividendReinvestmentCalculator, DividendYieldCalculator, FeeImpactCalculator, FutureValueCalculator, InflationAdjustedReturnCalculator, PaybackPeriodCalculator, PresentValueCalculator, NetPresentValueCalculator, RuleOf72Calculator, StockAveragePriceCalculator, CryptoReturnCalculator, BondYieldCalculator, AnnuityCalculator, AnnuityPayoutCalculator } from '@/components/calculators/generated/InvestmentExtraCalculators';
+import { CAGRCalculator, CDCalculator, DividendGrowthCalculator, DividendReinvestmentCalculator, DividendYieldCalculator, FeeImpactCalculator, FutureValueCalculator, InflationAdjustedReturnCalculator, PaybackPeriodCalculator, PresentValueCalculator, NetPresentValueCalculator, RuleOf72Calculator, StockAveragePriceCalculator, CryptoReturnCalculator, BondYieldCalculator, AnnuityCalculator, AnnuityPayoutCalculator } from '@/components/calculators/generated/InvestmentExtraCalculators';
 import { BillSplitCalculator, CostOfLivingCalculator, DebtStrategyCalculator, NetIncomeCalculator, SavingsGoalCalculator, SavingsRateCalculator, SinkingFundCalculator } from '@/components/calculators/generated/BudgetExtraCalculators';
 import { CapitalGainsTaxCalculator, EffectiveTaxRateCalculator, EstateTaxCalculator, GiftTaxCalculator, IncomeTaxCalculator, InheritanceTaxCalculator, SalesTaxCalculator, SelfEmploymentTaxCalculator, TaxBracketCalculator } from '@/components/calculators/generated/TaxExtraCalculators';
 import { BalanceTransferCalculator, CreditCardInterestCalculator, CreditCardMinimumPaymentCalculator, CreditUtilizationCalculator } from '@/components/calculators/generated/CreditCardExtraCalculators';
@@ -144,6 +144,8 @@ export function GeneratedCalculator({ id }: { id: CalculatorId }) {
       return <CryptoReturnCalculator />;
     case 'bond-yield':
       return <BondYieldCalculator />;
+    case 'cd':
+      return <CDCalculator />;
 
     case 'savings-goal':
       return <SavingsGoalCalculator />;

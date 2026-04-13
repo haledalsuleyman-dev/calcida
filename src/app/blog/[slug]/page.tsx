@@ -74,20 +74,28 @@ export default async function BlogPost({ params }: Props) {
     "@type": "Article",
     "headline": post.title,
     "description": post.description,
+    "url": `${baseUrl}/blog/${slug}`,
     "datePublished": post.date,
     "dateModified": post.lastUpdated || post.date,
     "author": {
       "@type": "Organization",
-      "name": "Calcida"
+      "name": "Calcida",
+      "url": baseUrl,
+      "logo": { "@type": "ImageObject", "url": `${baseUrl}/icon.png` }
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Calcida"
+      "name": "Calcida",
+      "url": baseUrl,
+      "logo": { "@type": "ImageObject", "url": `${baseUrl}/icon.png` }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `${baseUrl}/blog/${slug}`
-    }
+    },
+    ...(post.keywords && post.keywords.length > 0
+      ? { "keywords": post.keywords.join(', ') }
+      : {}),
   };
 
   const breadcrumbLd = {
@@ -114,6 +122,12 @@ export default async function BlogPost({ params }: Props) {
       }
     ]
   };
+
+  // Dynamically suggest calculators based on blog category + keywords
+  const suggestedCalculators = getCalculatorSuggestionsForBlog(
+    post.category,
+    post.keywords ?? [],
+  );
 
   return (
     <article className="container mx-auto px-4 py-12 max-w-3xl">
@@ -189,7 +203,26 @@ export default async function BlogPost({ params }: Props) {
 
       </div>
 
-      <div className="mt-12 text-center">
+      {/* Dynamic calculator suggestions based on article topic */}
+      {suggestedCalculators.length > 0 && (
+        <div className="mt-10 bg-blue-50 border border-blue-100 rounded-xl p-6">
+          <h3 className="text-lg font-bold text-blue-900 mb-4">Try These Calculators</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {suggestedCalculators.map((calc) => (
+              <Link
+                key={calc.href}
+                href={calc.href}
+                className="block p-3 bg-white border border-blue-200 rounded-lg hover:border-blue-500 hover:shadow-sm transition-all"
+              >
+                <span className="font-semibold text-blue-700 block">{calc.name}</span>
+                <span className="text-xs text-gray-500">{calc.reason}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="mt-10 text-center">
         <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-blue-600 font-medium">
             &larr; Back to all articles
         </Link>

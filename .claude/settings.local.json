@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:calcida.app)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "WebFetch(domain:www.nerdwallet.com)",
+      "WebFetch(domain:www.calculator.net)"
+    ]
+  }
+}

@@ -32,6 +32,9 @@ export function getCalculatorHub(spec: CalculatorSpec): CalculatorHub {
       'stock',
       'fees',
       'expense-ratio',
+      'cd-calculator',
+      'bond-yield',
+      'crypto',
     ];
     const budgetSignals = [
       'net-worth',

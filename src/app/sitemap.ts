@@ -12,7 +12,6 @@ import path from 'node:path';
 const APP_DIR = path.join(process.cwd(), 'src', 'app');
 const EXCLUDED_STATIC_ROUTES = new Set<string>([
   '/mortgage-refinance-calculator',
-  '/house-affordability-calculator',
   '/loan-interest-calculator',
 ]);
 

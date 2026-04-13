@@ -23,12 +23,19 @@ export function composeMetaTitle(title: string): string {
 
 function calculatorMetaTitle(inputTitle: string, canonicalPath: string): string {
   const year = new Date().getFullYear();
+  // These calculators depend on annual tax data, brackets, or contribution limits —
+  // adding the year signals freshness and improves CTR for high-intent queries.
   const isYearSensitive =
     canonicalPath.includes('paycheck') ||
     canonicalPath.includes('take-home') ||
     canonicalPath.includes('tax') ||
     canonicalPath.includes('401k') ||
-    canonicalPath.includes('after-tax');
+    canonicalPath.includes('after-tax') ||
+    canonicalPath.includes('income') ||
+    canonicalPath.includes('ira') ||
+    canonicalPath.includes('retirement') ||
+    canonicalPath.includes('salary') ||
+    canonicalPath.includes('social-security');
 
   if (isYearSensitive) {
     return `${inputTitle} (${year})`;

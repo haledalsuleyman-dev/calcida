@@ -34,6 +34,11 @@ const calculators = [
     name: "Investment Return Calculator",
     description: "Calculate the return on investment (ROI) for your portfolio or business ventures.",
     href: "/investment-return-calculator"
+  },
+  {
+    name: "CD Calculator",
+    description: "Calculate how much interest your Certificate of Deposit earns with month-by-month breakdown.",
+    href: "/cd-calculator"
   }
 ];
 

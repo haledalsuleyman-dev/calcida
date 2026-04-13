@@ -4,10 +4,14 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Calculator, DollarSign, Home, Briefcase, TrendingUp, CreditCard } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
+import { getSortedPostsData } from '@/lib/blog';
+import { faqPageJsonLd } from '@/lib/jsonld';
+
+const currentYear = new Date().getFullYear();
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Financial Calculators for Mortgages, Loans & Paychecks',
-  description: 'Use free financial calculators for mortgage payments, loans, salary conversions, taxes, retirement planning, and other everyday money decisions.',
+  title: 'Free Financial Calculators — Mortgage, Loan & Salary Tools',
+  description: `Free financial calculators for mortgages, loans, salary, taxes & retirement. Updated for ${currentYear}. Instant results, no sign-up required.`,
   canonicalPath: '/',
 });
 
@@ -71,27 +75,67 @@ const categories = [
   { name: "Taxes", href: "/tax", icon: Briefcase },
 ];
 
-export default function HomePage() {
+const HOME_FAQ = [
+  {
+    question: "Are these financial calculators free?",
+    answer: "Yes. Every calculator on Calcida is completely free to use. No sign-up, no subscription, and no hidden fees.",
+  },
+  {
+    question: "How accurate are the results?",
+    answer: `All calculators use standard financial formulas and are updated with ${currentYear} tax brackets, IRS limits, and current rates. Results are accurate for planning purposes; for complex tax situations consult a qualified advisor.`,
+  },
+  {
+    question: "Which calculator should I use first?",
+    answer: "Start with the calculator that matches your most pressing question — mortgage payment for home buyers, paycheck calculator for salary planning, or 401(k) calculator for retirement. Each page includes related tools to guide your next step.",
+  },
+  {
+    question: "Do the calculators work on mobile?",
+    answer: "Yes. All calculators are fully responsive and work on any device — phone, tablet, or desktop.",
+  },
+  {
+    question: "How often is the data updated?",
+    answer: `Tax data, contribution limits, and rate assumptions are reviewed and updated at the start of each tax year. The current data reflects ${currentYear} figures.`,
+  },
+];
+
+export default async function HomePage() {
+  const recentPosts = getSortedPostsData().slice(0, 4);
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Homepage FAQPage schema — triggers People Also Ask */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(HOME_FAQ)) }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-20 px-4 text-center">
         <div className="container mx-auto max-w-4xl">
+          {/* Trust signal pill */}
+          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            Updated for {currentYear} — Free &amp; No Sign-Up Required
+          </div>
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Financial Calculators Made Simple
+            Free Financial Calculators
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Make smarter financial decisions with our fast, free, and accurate calculators for mortgages, loans, salary, and more.
+            Mortgage, loan, salary, tax &amp; retirement calculators. Get instant answers to make smarter money decisions.
           </p>
           
-          <div className="max-w-md mx-auto relative">
-             {/* Search placeholder */}
-            <input 
-                type="text" 
-                placeholder="Search calculators (e.g. mortgage, auto loan)..." 
-                className="w-full px-6 py-4 rounded-full border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+          <form action="/calculators" method="get" className="max-w-md mx-auto relative">
+            <input
+              type="text"
+              name="q"
+              placeholder="Search calculators (e.g. mortgage, auto loan)..."
+              className="w-full px-6 py-4 pr-28 rounded-full border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
             />
-          </div>
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Search
+            </button>
+          </form>
 
           <div className="mt-6 flex flex-col items-center gap-3">
             <Link href="/calculators">
@@ -104,6 +148,30 @@ export default function HomePage() {
               <Link href="/retirement-calculators" className="hover:text-blue-600 hover:underline">Retirement</Link>
               <Link href="/investment-calculators" className="hover:text-blue-600 hover:underline">Investing</Link>
               <Link href="/budget-calculators" className="hover:text-blue-600 hover:underline">Budgeting</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats / social-proof bar */}
+      <section className="bg-white border-y border-gray-100 py-6">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-2xl font-extrabold text-blue-600">50+</div>
+              <div className="text-sm text-gray-500 mt-0.5">Free Calculators</div>
+            </div>
+            <div>
+              <div className="text-2xl font-extrabold text-blue-600">8</div>
+              <div className="text-sm text-gray-500 mt-0.5">Financial Categories</div>
+            </div>
+            <div>
+              <div className="text-2xl font-extrabold text-blue-600">{currentYear}</div>
+              <div className="text-sm text-gray-500 mt-0.5">Tax Data</div>
+            </div>
+            <div>
+              <div className="text-2xl font-extrabold text-blue-600">$0</div>
+              <div className="text-sm text-gray-500 mt-0.5">No Cost, Ever</div>
             </div>
           </div>
         </div>
@@ -187,13 +255,70 @@ export default function HomePage() {
                </div>
                <div>
                    <div className="text-4xl font-bold text-blue-600 mb-2">Accurate</div>
-                   <p className="text-gray-600">Updated with 2024 tax brackets and rates.</p>
+                   <p className="text-gray-600">Updated with {currentYear} tax brackets and rates.</p>
                </div>
                <div>
                    <div className="text-4xl font-bold text-blue-600 mb-2">Free</div>
                    <p className="text-gray-600">No sign-up required. Always free to use.</p>
                </div>
            </div>
+        </div>
+      </section>
+
+      {/* Latest Blog Posts */}
+      {recentPosts.length > 0 && (
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">Financial Guides</h2>
+                <p className="text-gray-500 mt-1 text-sm">In-depth articles to help you make better money decisions.</p>
+              </div>
+              <Link href="/blog" className="text-blue-600 hover:underline font-medium text-sm flex items-center gap-1">
+                All Articles →
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {recentPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col"
+                >
+                  <div className="p-5 flex flex-col flex-1">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-blue-600 mb-2">
+                      {post.category}
+                    </span>
+                    <h3 className="font-bold text-gray-900 group-hover:text-blue-700 transition-colors leading-snug mb-2 flex-1">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 line-clamp-2">{post.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Homepage FAQ — triggers "People Also Ask" in Google */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {HOME_FAQ.map((item) => (
+              <details
+                key={item.question}
+                className="group border border-gray-200 rounded-lg overflow-hidden"
+              >
+                <summary className="flex justify-between items-center p-4 cursor-pointer font-semibold text-gray-900 hover:bg-gray-50 list-none">
+                  {item.question}
+                  <span className="text-gray-400 group-open:rotate-180 transition-transform ml-4 shrink-0">▾</span>
+                </summary>
+                <div className="px-4 pb-4 text-gray-600 text-sm leading-relaxed">{item.answer}</div>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </div>

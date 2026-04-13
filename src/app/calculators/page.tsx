@@ -77,12 +77,18 @@ const groupDefs: Group[] = [
   },
 ];
 
-export default function CalculatorsIndexPage() {
+export default async function CalculatorsIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const query = (q ?? '').toLowerCase().trim();
+
   const groups = groupDefs.map((g) => {
     const idsInHub = CALCULATOR_SPECS
       .map((s) => s.id)
       .filter((id) => getCalculatorHub(getCalculatorSpec(id)).href === g.hubHref)
-      // Phase 1: Exclude secondary/redirected pages from directory
       .filter((id) => id !== 'mortgage-refinance' && id !== 'house-affordability' && id !== 'loan-interest');
     const inHub = new Set<CalculatorId>(idsInHub);
     const preferred = g.preferred.filter((id) => inHub.has(id));
@@ -94,6 +100,72 @@ export default function CalculatorsIndexPage() {
     return { ...g, ids };
   });
 
+  // When a search query is present, flatten all calculators and filter
+  if (query) {
+    const allCalcs = CALCULATOR_SPECS
+      .filter((s) => s.id !== 'mortgage-refinance' && s.id !== 'house-affordability' && s.id !== 'loan-interest')
+      .filter((s) =>
+        s.title.toLowerCase().includes(query) ||
+        s.description.toLowerCase().includes(query) ||
+        s.category.toLowerCase().includes(query)
+      );
+
+    return (
+      <>
+        <JsonLd data={[jsonLd]} />
+        <div className="container mx-auto px-4 py-12 max-w-6xl">
+          <h1 className="text-4xl font-bold mb-4 text-gray-900">Search Results</h1>
+          <form action="/calculators" method="get" className="max-w-xl mb-8">
+            <div className="relative">
+              <input
+                type="text"
+                name="q"
+                defaultValue={q}
+                placeholder="Search calculators..."
+                className="w-full px-5 py-3 pr-24 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-700"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+          {allCalcs.length === 0 ? (
+            <p className="text-gray-600 mb-8">
+              No calculators found for &ldquo;{q}&rdquo;.{' '}
+              <Link href="/calculators" className="text-blue-600 hover:underline">Browse all calculators</Link>.
+            </p>
+          ) : (
+            <>
+              <p className="text-gray-600 mb-6">
+                {allCalcs.length} calculator{allCalcs.length !== 1 ? 's' : ''} matching &ldquo;{q}&rdquo;.
+              </p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {allCalcs.map((spec) => (
+                  <Link
+                    key={spec.route}
+                    href={spec.route}
+                    className="block p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-sm transition-all"
+                  >
+                    <div className="font-semibold text-gray-900">{spec.title}</div>
+                    <div className="text-sm text-gray-600 mt-1">{spec.description}</div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
+          <div className="mt-8">
+            <Link href="/calculators" className="text-blue-600 hover:underline text-sm">
+              ← Browse all calculators by category
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <JsonLd data={[jsonLd]} />
@@ -103,6 +175,23 @@ export default function CalculatorsIndexPage() {
           Browse all of our free financial calculators by category. Compare loans, calculate mortgage payments,
           estimate retirement savings, track your net worth, and more.
         </p>
+
+        <form action="/calculators" method="get" className="mt-6 max-w-xl">
+          <div className="relative">
+            <input
+              type="text"
+              name="q"
+              placeholder="Search calculators (e.g. mortgage, salary, 401k)..."
+              className="w-full px-5 py-3 pr-24 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-700"
+            >
+              Search
+            </button>
+          </div>
+        </form>
 
         <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {groups.map((g) => (

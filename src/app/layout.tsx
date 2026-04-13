@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getSiteUrl } from "@/lib/utils";
+import { websiteJsonLd, organizationJsonLd } from "@/lib/jsonld";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Calcida" }],
   creator: "Calcida",
   metadataBase: new URL(getSiteUrl()),
-  alternates: {
-    canonical: './',
-  },
   icons: {
     icon: '/icon.png',
     apple: '/apple-icon.png',
@@ -79,6 +77,13 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "vsrh9plocq");
           `}
         </Script>
+        {/* Global structured data: WebSite (Sitelinks Searchbox) + Organization (E-E-A-T) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([websiteJsonLd(), organizationJsonLd()]),
+          }}
+        />
         <Header />
         <main className="flex-1">
           {children}
