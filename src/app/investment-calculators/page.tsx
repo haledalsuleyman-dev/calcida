@@ -29,6 +29,7 @@ export default function InvestmentCalculatorsPage() {
       title="Investment Calculators"
       description="Project investment growth, calculate ROI, and understand how compounding and inflation affect your money."
       calculators={calculators}
+      currentPath="/investment-calculators"
     >
       <p>
         Investing is about the relationship between time, contribution rate, and return. Compounding rewards consistency, and inflation reduces buying power in the

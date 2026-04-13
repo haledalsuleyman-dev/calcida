@@ -37,6 +37,7 @@ export default function RetirementCalculatorsPage() {
       title="Retirement Calculators"
       description="Plan retirement savings, project 401(k) growth, and estimate how contributions add up over time."
       calculators={calculators}
+      currentPath="/retirement-calculators"
     >
       <p>
         Retirement planning is a long-term math problem. Small changes to contributions, expected return, and time horizon can make a big difference in your final

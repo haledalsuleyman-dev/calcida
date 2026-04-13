@@ -2,11 +2,12 @@ import React from 'react';
 import { CalculatorLayout } from '@/components/calculators/CalculatorLayout';
 import { getCategory, type CategoryKey } from '@/lib/categories';
 import { softwareApplicationJsonLd, faqPageJsonLd, breadcrumbListJsonLd, type JsonLdFaqItem } from '@/lib/jsonld';
-import { relatedCalculatorLinksForSpec } from '@/lib/relatedCalculators';
+import { relatedCalculatorLinksForSpec, getCrossCategoryRelatedLinks } from '@/lib/relatedCalculators';
 import type { CalculatorSpec } from '@/lib/calculatorSpecs';
 import { getCalculatorHub } from '@/lib/calculatorHubs';
 import { getCalculatorSeoContentForRoute } from '@/lib/calculatorSeoContent';
 import { CalculatorExample, CalculatorFormula, CalculatorIntro } from '@/components/calculators/SeoContentBlocks';
+import { getNextStepForCalculator, getContextualCrossLinks, CATEGORY_HUB_LINKS } from '@/lib/internalLinking';
 import Link from 'next/link';
 import { TrustBadge } from '@/components/TrustBadge';
 
@@ -471,6 +472,9 @@ export function CalculatorPage(props: CalculatorPageProps) {
     }),
   ];
 
+  const defaultNextStep = getNextStepForCalculator(props.spec);
+  const finalNextStep = props.nextStep ?? defaultNextStep;
+
   return (
     <CalculatorLayout
       title={props.spec.title}
@@ -489,7 +493,7 @@ export function CalculatorPage(props: CalculatorPageProps) {
       example={props.example ?? (seoContent ? <CalculatorExample example={seoContent.example} /> : <p>Enter sample values in the calculator above to see an example result and then adjust inputs to compare scenarios.</p>)}
       guide={props.guide}
       schema={schema}
-      nextStep={props.nextStep}
+      nextStep={finalNextStep}
     >
       {props.children}
     </CalculatorLayout>

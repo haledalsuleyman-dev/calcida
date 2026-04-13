@@ -18,8 +18,10 @@ export function Header() {
         </Link>
         
         {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-700">
+        <nav className="hidden md:flex gap-5 text-sm font-medium text-gray-700">
           <Link href="/calculators" className="hover:text-blue-600 transition-colors">Calculators</Link>
+          <Link href="/investment-calculators" className="hover:text-blue-600 transition-colors">Investment</Link>
+          <Link href="/budget-calculators" className="hover:text-blue-600 transition-colors">Budget</Link>
           <Link href="/mortgage-calculators" className="hover:text-blue-600 transition-colors">Mortgage</Link>
           <Link href="/loan-calculators" className="hover:text-blue-600 transition-colors">Loans</Link>
           <Link href="/salary-calculators" className="hover:text-blue-600 transition-colors">Salary</Link>
@@ -42,6 +44,8 @@ export function Header() {
         <div className="md:hidden border-t border-gray-100 bg-white absolute top-16 left-0 right-0 shadow-lg animate-in slide-in-from-top-5 duration-200">
             <nav className="flex flex-col p-4 gap-4 text-sm font-medium text-gray-700">
                 <Link href="/calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Calculators</Link>
+                <Link href="/investment-calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Investment</Link>
+                <Link href="/budget-calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Budget</Link>
                 <Link href="/mortgage-calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Mortgage</Link>
                 <Link href="/loan-calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Loans</Link>
                 <Link href="/salary-calculators" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 transition-colors py-2 border-b border-gray-50">Salary</Link>

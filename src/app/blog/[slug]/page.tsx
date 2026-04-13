@@ -5,6 +5,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getSiteUrl } from '@/lib/utils';
 import { pageMetadata } from '@/lib/seo';
+import { getCalculatorSuggestionsForBlog } from '@/lib/internalLinking';
+import { getCalculatorSpec } from '@/lib/calculatorSpecs';
 
 type Props = {
   params: Promise<{ slug: string }>;

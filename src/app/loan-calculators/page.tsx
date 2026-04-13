@@ -31,6 +31,7 @@ export default function LoanCalculatorsPage() {
       title="Loan Calculators"
       description="Estimate loan payments, compare offers, and understand the true cost of borrowing."
       calculators={calculators}
+      currentPath="/loan-calculators"
     >
       <p>
         Loans are easiest to compare when you look at the monthly payment, total interest, and total cost side-by-side. A lower monthly payment can hide a higher

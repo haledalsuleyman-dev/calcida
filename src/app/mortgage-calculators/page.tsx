@@ -31,6 +31,7 @@ export default function MortgageCalculatorsPage() {
       title="Mortgage Calculators"
       description="Browse our mortgage calculators to estimate payments, understand amortization, and evaluate refinance scenarios."
       calculators={calculators}
+      currentPath="/mortgage-calculators"
     >
       <p>
         Mortgages can be complicated because the monthly payment depends on the interest rate, loan term, taxes, insurance, and the repayment schedule over time.

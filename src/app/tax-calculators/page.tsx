@@ -28,6 +28,7 @@ export default function TaxCalculatorsPage() {
       title="Tax Calculators"
       description="Calculate your estimated taxes, understand marginal vs. effective tax rates, and plan for your tax liability with our free tools."
       calculators={calculators}
+      currentPath="/tax-calculators"
     >
       <p>
         Taxes are a significant part of your financial picture. Understanding how much you owe and how different types of income are taxed is crucial for accurate budgeting.

@@ -29,6 +29,7 @@ export default function BudgetCalculatorsPage() {
       title="Budget & Personal Finance Calculators"
       description="Track your net worth, create a budget, build an emergency fund, and pay off debt faster."
       calculators={calculators}
+      currentPath="/budget-calculators"
     >
       <p>
         Personal finance is a system. Your budget controls your cash flow, your emergency fund prevents setbacks, and your debt payoff plan determines how quickly

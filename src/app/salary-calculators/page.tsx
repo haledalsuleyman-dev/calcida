@@ -28,6 +28,7 @@ export default function SalaryCalculatorsPage() {
       title="Salary Calculators"
       description="Convert salary and hourly wages, estimate take-home pay, and understand what you actually earn."
       calculators={calculators}
+      currentPath="/salary-calculators"
     >
       <p>
         Whether you are comparing job offers or planning your budget, the most important number is your take-home pay. These calculators help you convert between

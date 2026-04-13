@@ -28,6 +28,7 @@ export default function CreditCardCalculatorsPage() {
       title="Credit Card Calculators"
       description="Manage your credit card debt and optimize your payments with our suite of free financial tools."
       calculators={calculators}
+      currentPath="/credit-card-calculators"
     >
       <p>
         Credit card debt can be one of the most expensive forms of borrowing due to high interest rates. 
