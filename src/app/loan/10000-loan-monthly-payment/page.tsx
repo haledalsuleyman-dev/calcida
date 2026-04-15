@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: '$10,000 Loan Monthly Payment: Personal Loan Calculator',
   description: 'Estimate the monthly payment for a $10,000 personal loan. Adjust APR and term to compare costs and total interest—fast and free.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/loan/10000-loan-monthly-payment' },
+  alternates: { canonical: '/personal-loan-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$10,000 Loan Monthly Payment',
     description: 'Estimate monthly payment and total interest for a $10,000 personal loan.',

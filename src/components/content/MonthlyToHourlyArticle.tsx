@@ -151,7 +151,7 @@ export function MonthlyToHourlyArticle({ monthlyNum }: Props) {
       <div className="my-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Tracking Monthly Income Matters</h2>
         <p>
-          Most major expenses—like rent, mortgages, and car payments—are calculated on a monthly basis. By knowing that your {monthlyStr} translates to {hourlyStr} an hour, you can better judge whether a new subscription or recurring expense is truly worth your time. For instance, a $50 monthly bill represents roughly {Math.round(50 / hourly)} hours of your labor. To see how this fits into a larger home buying plan, use our <Link href="/mortgage-payment-calculator" className="text-blue-600 hover:underline">Mortgage Payment Calculator</Link>.
+          Most major expenses—like rent, mortgages, and car payments—are calculated on a monthly basis. By knowing that your {monthlyStr} translates to {hourlyStr} an hour, you can better judge whether a new subscription or recurring expense is truly worth your time. For instance, a $50 monthly bill represents roughly {Math.round(50 / hourly)} hours of your labor. To see how this fits into a larger home buying plan, use our <Link href="/mortgage-calculators" className="text-blue-600 hover:underline">Mortgage Calculators</Link> hub.
         </p>
       </div>
 
@@ -184,11 +184,11 @@ export function MonthlyToHourlyArticle({ monthlyNum }: Props) {
           <Link href="/salary-to-hourly-calculator" className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20">
             Salary Converter
           </Link>
-          <Link href="/take-home-pay-calculator" className="px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold transition-all">
-            Take-Home Pay Tool
+          <Link href="/paycheck-calculator" className="px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold transition-all">
+            Paycheck Estimator
           </Link>
-          <Link href="/mortgage-payment-calculator" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
-            Mortgage Tool
+          <Link href="/salary-calculators" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
+            Income Hub
           </Link>
         </div>
       </div>

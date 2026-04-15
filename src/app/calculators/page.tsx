@@ -5,10 +5,11 @@ import { JsonLd } from '@/components/JsonLd';
 import { getCalculatorSpec, type CalculatorId, CALCULATOR_SPECS } from '@/lib/calculatorSpecs';
 import { getCalculatorHub } from '@/lib/calculatorHubs';
 import { pageMetadata } from '@/lib/seo';
+import { breadcrumbListJsonLd } from '@/lib/jsonld';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'All Financial Calculators by Category',
-  description: 'Browse Calcida calculators by category to compare mortgage costs, loan payments, salary conversions, taxes, investing, and retirement scenarios.',
+  title: 'Financial Calculators Directory | Free Online Finance Tools',
+  description: 'The master directory of all free Calcida calculators. Master your money with tools for mortgages, retirement, salary conversion, debt payoff, and daily budgeting.',
   canonicalPath: '/calculators',
 });
 
@@ -100,7 +101,6 @@ export default async function CalculatorsIndexPage({
     return { ...g, ids };
   });
 
-  // When a search query is present, flatten all calculators and filter
   if (query) {
     const allCalcs = CALCULATOR_SPECS
       .filter((s) => s.id !== 'mortgage-refinance' && s.id !== 'house-affordability' && s.id !== 'loan-interest')
@@ -112,7 +112,12 @@ export default async function CalculatorsIndexPage({
 
     return (
       <>
-        <JsonLd data={[jsonLd]} />
+        <JsonLd data={[jsonLd, breadcrumbListJsonLd({
+          items: [
+            { name: 'Home', path: '/' },
+            { name: 'Calculators', path: '/calculators' },
+          ]
+        })]} />
         <div className="container mx-auto px-4 py-12 max-w-6xl">
           <h1 className="text-4xl font-bold mb-4 text-gray-900">Search Results</h1>
           <form action="/calculators" method="get" className="max-w-xl mb-8">
@@ -121,7 +126,7 @@ export default async function CalculatorsIndexPage({
                 type="text"
                 name="q"
                 defaultValue={q}
-                placeholder="Search calculators..."
+                placeholder="Search calculators (e.g. 401k, mortgage, salary)..."
                 className="w-full px-5 py-3 pr-24 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
               />
               <button
@@ -166,14 +171,20 @@ export default async function CalculatorsIndexPage({
     );
   }
 
+  const breadcrumb = breadcrumbListJsonLd({
+    items: [
+      { name: 'Home', path: '/' },
+      { name: 'Calculators', path: '/calculators' },
+    ],
+  });
+
   return (
     <>
-      <JsonLd data={[jsonLd]} />
+      <JsonLd data={[jsonLd, breadcrumb]} />
       <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">All Financial Calculators</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-900">Master Calculator Directory</h1>
         <p className="text-lg text-gray-700 max-w-3xl">
-          Browse all of our free financial calculators by category. Compare loans, calculate mortgage payments,
-          estimate retirement savings, track your net worth, and more.
+          Welcome to the absolute central hub for all financial tooling on Calcida. Whether you are closing on a mortgage, negotiating a new salary, or mathematically plotting your exit from the workforce, you will find the exact calculation engine you need below.
         </p>
 
         <form action="/calculators" method="get" className="mt-6 max-w-xl">
@@ -181,7 +192,7 @@ export default async function CalculatorsIndexPage({
             <input
               type="text"
               name="q"
-              placeholder="Search calculators (e.g. mortgage, salary, 401k)..."
+              placeholder="Search explicitly (e.g. mortgage, self-employment tax, 401k)..."
               className="w-full px-5 py-3 pr-24 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
             />
             <button
@@ -193,7 +204,34 @@ export default async function CalculatorsIndexPage({
           </div>
         </form>
 
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="mt-12 bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+          <section className="mb-0">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Most Popular Execution Engines</h2>
+            <p className="text-gray-700 mb-6">
+              If you aren't sure where to start your financial modeling, begin with these heavily-trafficked baseline tools:
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Link href="/mortgage-payment-calculator" className="bg-blue-50 border border-blue-100 p-4 rounded hover:border-blue-300 transition-colors">
+                <h3 className="font-bold text-blue-900 mb-1">Mortgage Calculator</h3>
+                <p className="text-sm text-blue-800">Identify your true monthly housing payment before underwriting.</p>
+              </Link>
+              <Link href="/compound-interest-calculator" className="bg-green-50 border border-green-100 p-4 rounded hover:border-green-300 transition-colors">
+                <h3 className="font-bold text-green-900 mb-1">Compound Interest</h3>
+                <p className="text-sm text-green-800">Map the exponential growth curve of long-term indexing.</p>
+              </Link>
+              <Link href="/salary-to-hourly-calculator" className="bg-purple-50 border border-purple-100 p-4 rounded hover:border-purple-300 transition-colors">
+                <h3 className="font-bold text-purple-900 mb-1">Salary to Hourly</h3>
+                <p className="text-sm text-purple-800">Seamlessly fluidize gross compensation packages.</p>
+              </Link>
+              <Link href="/credit-card-payoff-calculator" className="bg-red-50 border border-red-100 p-4 rounded hover:border-red-300 transition-colors">
+                <h3 className="font-bold text-red-900 mb-1">Debt Extinguishment</h3>
+                <p className="text-sm text-red-800">Calculate the brutal reality of 25% APR structural revolving traps.</p>
+              </Link>
+            </div>
+          </section>
+        </div>
+
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {groups.map((g) => (
             <Link
               key={g.hubHref}
@@ -207,14 +245,14 @@ export default async function CalculatorsIndexPage({
 
         <div className="mt-12 space-y-12">
           {groups.map((group) => (
-            <section key={group.title} className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <section key={group.title} className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">{group.title}</h2>
                   <p className="text-sm text-gray-600 mt-1">{group.intro}</p>
                 </div>
                 <Link href={group.hubHref} className="text-sm font-medium text-blue-600 hover:underline">
-                  View {group.title} →
+                  View {group.title} Hub →
                 </Link>
               </div>
 
@@ -223,7 +261,7 @@ export default async function CalculatorsIndexPage({
                   const spec = getCalculatorSpec(id);
                   return (
                     <Link
-                      key={spec.route}
+                       key={spec.route}
                       href={spec.route}
                       className="block p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-sm transition-all"
                     >
@@ -241,4 +279,3 @@ export default async function CalculatorsIndexPage({
     </>
   );
 }
-

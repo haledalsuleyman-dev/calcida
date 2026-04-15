@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: 'How Much House Can I Afford on $70,000 Salary? Calculator',
   description: 'Estimate how much house you can afford on a $70,000 salary. Use a home affordability calculator with income, debts, down payment, and rate—free.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/mortgage/how-much-house-can-i-afford-on-70000-salary' },
+  alternates: { canonical: '/mortgage-affordability-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'How Much House Can I Afford on $70,000 Salary?',
     description: 'Estimate a home price range using income, debts, down payment, and interest rate assumptions.',

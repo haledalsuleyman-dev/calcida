@@ -7,6 +7,10 @@ import { getSiteUrl } from '@/lib/utils';
 import { pageMetadata } from '@/lib/seo';
 import { getCalculatorSuggestionsForBlog } from '@/lib/internalLinking';
 import { getCalculatorSpec } from '@/lib/calculatorSpecs';
+import { faqPageJsonLd, breadcrumbListJsonLd, blogPostingJsonLd } from '@/lib/jsonld';
+import { BlogCTA } from '@/components/content/BlogCTA';
+import { AuthorBlock, DisclaimerBlock, SourcesBlock } from '@/components/content/AuthorBlock';
+import { AdSlot } from '@/components/ads/AdSlot';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -68,60 +72,23 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
-  // Schema.org JSON-LD
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": post.title,
-    "description": post.description,
-    "url": `${baseUrl}/blog/${slug}`,
-    "datePublished": post.date,
-    "dateModified": post.lastUpdated || post.date,
-    "author": {
-      "@type": "Organization",
-      "name": "Calcida",
-      "url": baseUrl,
-      "logo": { "@type": "ImageObject", "url": `${baseUrl}/icon.png` }
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Calcida",
-      "url": baseUrl,
-      "logo": { "@type": "ImageObject", "url": `${baseUrl}/icon.png` }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${baseUrl}/blog/${slug}`
-    },
-    ...(post.keywords && post.keywords.length > 0
-      ? { "keywords": post.keywords.join(', ') }
-      : {}),
-  };
-
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": baseUrl
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": `${baseUrl}/blog`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": post.title,
-        "item": `${baseUrl}/blog/${slug}`
-      }
-    ]
-  };
+  const schema = [
+    blogPostingJsonLd({
+      headline: post.title,
+      description: post.description,
+      datePublished: post.date,
+      dateModified: post.lastUpdated,
+      urlPath: `/blog/${slug}`,
+    }),
+    breadcrumbListJsonLd({
+      items: [
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog' },
+        { name: post.category, path: `/blog/${post.category.toLowerCase()}` },
+        { name: post.title, path: `/blog/${slug}` },
+      ],
+    }),
+  ];
 
   // Dynamically suggest calculators based on blog category + keywords
   const suggestedCalculators = getCalculatorSuggestionsForBlog(
@@ -130,15 +97,14 @@ export default async function BlogPost({ params }: Props) {
   );
 
   return (
-    <article className="container mx-auto px-4 py-12 max-w-3xl">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+    <article className="container mx-auto px-4 py-12 max-w-4xl">
+      {schema.map((s, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
+        />
+      ))}
 
       <header className="mb-8 text-center">
         <div className="flex justify-center gap-2 mb-4">
@@ -155,45 +121,63 @@ export default async function BlogPost({ params }: Props) {
         </div>
       </header>
 
+      <AdSlot id="blog-after-header" type="horizontal" className="mb-10" />
+
       <div className="prose prose-blue prose-lg max-w-none mb-12">
         <MDXRemote source={post.content} components={mdxComponents} />
       </div>
 
+      <AdSlot id="blog-after-content" type="horizontal" className="my-12" />
+
+      <AuthorBlock />
+      <SourcesBlock />
+      <DisclaimerBlock />
+
+      <BlogCTA category={post.category} />
+
+      <AdSlot id="blog-before-tools" type="horizontal" className="my-16" />
+
       <hr className="my-12 border-gray-200" />
 
-      {/* Related Content Section */}
-      <div className="grid md:grid-cols-2 gap-8">
-        
-        {/* Related Calculators */}
-        {post.relatedCalculators && post.relatedCalculators.length > 0 && (
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                <h3 className="text-lg font-bold mb-4 text-gray-900">Related Calculators</h3>
-                <ul className="space-y-3">
-                    {post.relatedCalculators.map((calcPath) => (
-                        <li key={calcPath}>
-                            <Link href={calcPath} className="text-blue-600 hover:underline font-medium flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-                                {getCalculatorName(calcPath)}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        )}
+      {/* Suggested Tools Section */}
+      <div className="mb-16">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8">Professional Decision Support</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {suggestedCalculators.map((calc) => (
+            <Link
+              key={calc.href}
+              href={calc.href}
+              className="group p-6 bg-white border border-gray-200 rounded-2xl hover:border-blue-500 hover:shadow-lg transition-all"
+            >
+              <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+              <h3 className="font-bold text-xl text-gray-900 group-hover:text-blue-600 transition-colors mb-2">{calc.name}</h3>
+              <p className="text-gray-500 text-sm mb-4 leading-relaxed">{calc.reason}</p>
+              <span className="text-blue-600 font-bold text-sm flex items-center gap-1">
+                Open Calculator <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7-7 7M3 12h18"></path></svg>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
 
-        {/* Related Articles (Placeholder logic - ideally this would be dynamic, but frontmatter is manual) */}
+      {/* Additional Resources */}
+      <div className="grid md:grid-cols-2 gap-8 mb-16">
+        
+        {/* Related articles */}
         {post.relatedArticles && post.relatedArticles.length > 0 && (
-             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-bold mb-4 text-gray-900">Related Articles</h3>
-                <ul className="space-y-3">
+             <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                <h3 className="text-xl font-bold mb-6 text-gray-900">Keep Reading</h3>
+                <ul className="space-y-4">
                     {post.relatedArticles.map((articleSlug) => {
-                        // In a real app we might fetch the title, but for now we format the slug
                         const title = articleSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                         return (
                             <li key={articleSlug}>
-                                <Link href={`/blog/${articleSlug}`} className="text-blue-600 hover:underline font-medium block">
+                                <Link href={`/blog/${articleSlug}`} className="text-blue-600 hover:underline font-semibold block leading-tight">
                                     {title}
                                 </Link>
+                                <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest font-bold">Related Guide</p>
                             </li>
                         );
                     })}
@@ -201,33 +185,27 @@ export default async function BlogPost({ params }: Props) {
             </div>
         )}
 
+        {/* Directory Link */}
+        <div className="bg-gray-900 text-white p-8 rounded-2xl flex flex-col justify-center">
+            <h3 className="text-xl font-bold mb-3 italic text-blue-400">Next Steps</h3>
+            <p className="text-gray-400 text-sm mb-6">Explore our full directory of financial planning tools to build your custom wealth map.</p>
+            <Link href="/calculators" className="text-white font-bold hover:text-blue-400 flex items-center gap-2">
+                All 100+ Financial Calculators <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </Link>
+        </div>
+
       </div>
 
-      {/* Dynamic calculator suggestions based on article topic */}
-      {suggestedCalculators.length > 0 && (
-        <div className="mt-10 bg-blue-50 border border-blue-100 rounded-xl p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">Try These Calculators</h3>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {suggestedCalculators.map((calc) => (
-              <Link
-                key={calc.href}
-                href={calc.href}
-                className="block p-3 bg-white border border-blue-200 rounded-lg hover:border-blue-500 hover:shadow-sm transition-all"
-              >
-                <span className="font-semibold text-blue-700 block">{calc.name}</span>
-                <span className="text-xs text-gray-500">{calc.reason}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="mt-10 text-center">
-        <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-blue-600 font-medium">
-            &larr; Back to all articles
+      <div className="mt-10 pt-10 border-t border-gray-100 flex items-center justify-between">
+        <Link href="/blog" className="inline-flex items-center text-gray-500 hover:text-blue-600 font-bold tracking-tight">
+            &larr; BACK TO LIBRARY
+        </Link>
+        <Link href={`/blog/${post.category}`} className="inline-flex items-center text-gray-500 hover:text-blue-600 font-bold tracking-tight uppercase">
+            {post.category} HUB &rarr;
         </Link>
       </div>
 
     </article>
+
   );
 }

@@ -52,15 +52,59 @@ export function breadcrumbListJsonLd(input: { items: { name: string; path: strin
 }
 
 /**
+ * Article / BlogPosting schema — helps Google understand editorial content.
+ */
+export function blogPostingJsonLd(input: {
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+  authorName?: string;
+  urlPath: string;
+  image?: string;
+}) {
+  const url = `${getSiteUrl()}${input.urlPath}`;
+  const siteUrl = getSiteUrl();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: input.headline,
+    description: input.description,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified ?? input.datePublished,
+    author: {
+      '@type': 'Person',
+      name: input.authorName ?? 'Calcida Team',
+      url: `${siteUrl}/about`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Calcida',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/icon.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    url,
+    ...(input.image ? { image: input.image } : {}),
+  };
+}
+
+/**
  * WebSite schema with SearchAction — enables Google Sitelinks Searchbox.
- * Place this on the homepage once. The urlTemplate must match your search URL pattern.
  */
 export function websiteJsonLd() {
   const url = getSiteUrl();
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${url}/#website`,
     name: 'Calcida',
+    alternateName: 'Calcida Financial Calculators',
     url,
     description:
       'Free financial calculators for mortgages, loans, salary, taxes, retirement, and more.',
@@ -76,19 +120,21 @@ export function websiteJsonLd() {
 }
 
 /**
- * Organization schema — strengthens E-E-A-T signals and brand knowledge graph.
- * Place this on the homepage or globally in the layout.
+ * Organization schema — strengthens E-E-A-T signals.
  */
 export function organizationJsonLd() {
   const url = getSiteUrl();
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${url}/#organization`,
     name: 'Calcida',
     url,
     logo: {
       '@type': 'ImageObject',
       url: `${url}/icon.png`,
+      width: '512',
+      height: '512',
     },
     description:
       'Calcida provides free, accurate financial calculators for mortgages, loans, salary, retirement, taxes, and personal finance.',
@@ -97,7 +143,7 @@ export function organizationJsonLd() {
       contactType: 'customer support',
       url: `${url}/contact`,
     },
-    sameAs: [],
+    sameAs: [], // Add social media URLs here in the future
   };
 }
 

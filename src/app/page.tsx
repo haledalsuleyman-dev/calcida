@@ -5,7 +5,8 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Ca
 import { Calculator, DollarSign, Home, Briefcase, TrendingUp, CreditCard } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
 import { getSortedPostsData } from '@/lib/blog';
-import { faqPageJsonLd } from '@/lib/jsonld';
+import { faqPageJsonLd, organizationJsonLd, websiteJsonLd } from '@/lib/jsonld';
+import { AdSlot } from '@/components/ads/AdSlot';
 
 const currentYear = new Date().getFullYear();
 
@@ -67,12 +68,12 @@ const popularCalculators = [
 ];
 
 const categories = [
-  { name: "Mortgage", href: "/mortgage", icon: Home },
-  { name: "Loans", href: "/loan", icon: Calculator },
-  { name: "Salary", href: "/salary", icon: DollarSign },
-  { name: "Retirement", href: "/retirement", icon: TrendingUp },
-  { name: "Credit Cards", href: "/credit-card", icon: CreditCard },
-  { name: "Taxes", href: "/tax", icon: Briefcase },
+  { name: "Mortgage Calculators", href: "/mortgage-calculators", icon: Home },
+  { name: "Loan Calculators", href: "/loan-calculators", icon: Calculator },
+  { name: "Salary Conversions", href: "/salary-calculators", icon: DollarSign },
+  { name: "Retirement Planning", href: "/retirement-calculators", icon: TrendingUp },
+  { name: "Credit Card Payoff", href: "/credit-card-calculators", icon: CreditCard },
+  { name: "Tax Estimations", href: "/tax-calculators", icon: Briefcase },
 ];
 
 const HOME_FAQ = [
@@ -102,10 +103,17 @@ export default async function HomePage() {
   const recentPosts = getSortedPostsData().slice(0, 4);
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Homepage FAQPage schema — triggers People Also Ask */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd(HOME_FAQ)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
       />
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-20 px-4 text-center">
@@ -142,12 +150,12 @@ export default async function HomePage() {
               <Button size="lg">Browse All Calculators</Button>
             </Link>
             <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-gray-600">
-              <Link href="/mortgage-calculators" className="hover:text-blue-600 hover:underline">Mortgage</Link>
-              <Link href="/loan-calculators" className="hover:text-blue-600 hover:underline">Loans</Link>
-              <Link href="/salary-calculators" className="hover:text-blue-600 hover:underline">Salary</Link>
-              <Link href="/retirement-calculators" className="hover:text-blue-600 hover:underline">Retirement</Link>
-              <Link href="/investment-calculators" className="hover:text-blue-600 hover:underline">Investing</Link>
-              <Link href="/budget-calculators" className="hover:text-blue-600 hover:underline">Budgeting</Link>
+              <Link href="/mortgage-calculators" className="hover:text-blue-600 hover:underline">Mortgage Calculators</Link>
+              <Link href="/loan-calculators" className="hover:text-blue-600 hover:underline">Debt & Loans</Link>
+              <Link href="/salary-calculators" className="hover:text-blue-600 hover:underline">Salary & Paycheck</Link>
+              <Link href="/retirement-calculators" className="hover:text-blue-600 hover:underline">Retirement Models</Link>
+              <Link href="/investment-calculators" className="hover:text-blue-600 hover:underline">Investment Yields</Link>
+              <Link href="/budget-calculators" className="hover:text-blue-600 hover:underline">Budget & Net Worth</Link>
             </div>
           </div>
         </div>
@@ -198,6 +206,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <AdSlot id="home-after-popular" type="horizontal" className="my-10" />
 
       {/* New Calculators */}
       <section className="py-16 bg-blue-50/50">
@@ -321,6 +331,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <AdSlot id="home-before-footer" type="horizontal" className="mb-10" />
     </div>
   );
 }

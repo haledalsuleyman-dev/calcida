@@ -5,8 +5,8 @@ import { JsonLd } from '@/components/JsonLd';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Editorial Policy and Methodology Standards',
-  description: 'Review Calcida editorial standards, calculator methodology, update practices, corrections policy, and independence guidelines.',
+  title: 'Editorial Policy and Methodology Standards | Calcida',
+  description: 'Review Calcida\'s strict editorial independence, accurate calculator methodology, update frequency, and verification practices.',
   canonicalPath: '/editorial-policy',
 });
 
@@ -22,56 +22,66 @@ export default function EditorialPolicyPage() {
     <>
       <JsonLd data={jsonLd} />
       <div className="container mx-auto px-4 py-12 max-w-3xl">
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">Editorial Policy & Methodology</h1>
+        <h1 className="text-4xl font-bold mb-6 text-gray-900 border-b border-gray-200 pb-4">Editorial Policy & Methodology</h1>
         
-        <div className="prose prose-blue max-w-none text-gray-700">
-          <p className="text-xl leading-relaxed mb-6">
-            At Calcida, our primary goal is to provide reliable, clear, and objective financial calculators. We understand that mathematical accuracy is critical when exploring financial decisions. This policy outlines our strict standards for calculator development, content creation, and ongoing reviews.
+        <div className="prose prose-lg prose-blue max-w-none text-gray-700">
+          <p className="text-xl leading-relaxed mb-10 text-gray-800 font-medium">
+            At Calcida, our primary directive is to provide highly reliable, mathematically sound, and completely objective financial tools. Because personal finance heavily impacts quality of life, we enforce strict standards for calculator logic, content creation, and ongoing reviews.
           </p>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">1. Core Principles</h2>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Objectivity:</strong> Our core calculators are built purely on standard financial mathematics. Our formulas do not inherently favor any specific financial product or institution.</li>
-            <li><strong>Transparency:</strong> We strive to clearly state the assumptions behind every calculator (e.g., compounding frequency, tax assumptions, or standard defaults) directly within the tool.</li>
-            <li><strong>Educational Purpose:</strong> Our tools are designed strictly for educational and informational purposes. They are meant to help users explore scenarios, not to serve as definitive or binding financial advice.</li>
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">1. How Content & Tools Are Created</h2>
+          <p className="mb-4">Everything natively hosted on Calcida runs through a structured development lifecycle:</p>
+          <ul className="list-disc pl-6 mb-8 space-y-2">
+            <li><strong>Expert Sourcing:</strong> The underlying equations for our calculators are sourced exclusively from recognized financial textbooks and institutional documentation, ensuring no arbitrary or unproven math is deployed.</li>
+            <li><strong>Educational First:</strong> The guides surrounding our calculators are written to explain <em>how</em> the math works. We actively avoid promotional "fluff" and focus on providing tactile, step-by-step financial frameworks (like the 20/4/10 Auto Loan rule).</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">2. Calculator Methodology & Accuracy</h2>
-          <p className="mb-4">Our calculators use standard industry formulas for amortization, present/future value, compound interest, and tax estimations. Our development process includes:</p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Formula Verification:</strong> Core math logic is carefully cross-referenced against established financial textbooks and institutional benchmarks (e.g., standard lending formulas used by banks).</li>
-            <li><strong>Edge-Case Testing:</strong> We rigorously test inputs to ensure the calculators gracefully handle zero-values, very high values, or unrealistic term lengths without returning misleading data.</li>
-            <li><strong>Continuous Updates:</strong> Elements tied to tax brackets, standard deductions, and contribution limits (like 401(k) or IRA limits) are reviewed and updated annually to reflect current IRS data.</li>
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">2. Financial Review & Accuracy Assurance</h2>
+          <p className="mb-4">Before any calculator is published, it must pass a rigorous, multi-layered review phase:</p>
+          <ul className="list-disc pl-6 mb-8 space-y-2">
+            <li><strong>Algorithmic Integrity:</strong> Engineers write extensive unit tests to force the calculator to handle edge cases—such as zero interest, extremely long terms, and excessive principal balances—without producing mathematical errors.</li>
+            <li><strong>Cross-Referencing:</strong> Output estimates must align precisely with the outputs generated by standard banking amortization schedules and official federal tax documentation.</li>
+            <li><strong>Disclaimer Transparency:</strong> Every tool is accompanied by a trust marker clearly stating that the outputs are <em>educational estimates</em>, requiring users to understand the mathematical limitations.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">3. Content Review & Update Frequency</h2>
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">3. Update Frequency</h2>
           <p className="mb-4">
-            Our content and calculators are subject to a rigorous review process. To ensure continued accuracy and relevance:
+            Financial laws change. We actively combat outdated information through systematic updates:
           </p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Annual Core Updates:</strong> All calculators tied to federal tax brackets, standard deductions, and retirement contribution limits (e.g., 401(k), IRA) are updated every January to reflect the latest IRS data.</li>
-            <li><strong>Quarterly Technical Audits:</strong> Our engineering team performs quarterly audits of our core calculation engines to ensure mathematical precision and performance standards are met.</li>
-            <li><strong>Ongoing Editorial Review:</strong> Accompanying articles, guides, and FAQs are reviewed regularly for clarity, and to ensure they reflect the current economic and interest rate environment.</li>
+          <ul className="list-disc pl-6 mb-8 space-y-2">
+            <li><strong>Annual Core Refreshes:</strong> All calculators tied to federal logic (Income Tax brackets, Standard Deductions, FICA rates, 401(k)/IRA contribution limits) are hard-updated every single January to reflect the new IRS data.</li>
+            <li><strong>Market Rate Adjustments:</strong> Default inputs for variables like APY, High-Yield Savings rates, and Mortgage rates are periodically reviewed to reflect current macroeconomic environments.</li>
+            <li><strong>Article Audits:</strong> Support articles and guides are continuously audited and refreshed to ensure terminology and financial strategies are modern and accurate.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">4. Revenue and Independence</h2>
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">4. Revenue, Independence, & Objectivity</h2>
           <p className="mb-4">
-            Calcida is an independent platform. While we may earn revenue through display advertising or affiliate partnerships, these relationships <strong>never</strong> influence our calculator math, default inputs, or the objective nature of our tools. Our editorial integrity and mathematical accuracy always come first.
+            Calcida is a fiercely independent platform. 
+          </p>
+          <p className="mb-8">
+            While we may earn revenue through passive display advertising or affiliate partnerships, these relationships <strong>never</strong> influence the underlying mathematical logic of our calculators. A mortgage calculator will never artificially inflate costs to push a user toward refinancing. Our editorial integrity and mathematical accuracy are absolute and non-negotiable.
           </p>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">5. Corrections & Error Handling</h2>
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">5. Corrections Policy</h2>
           <p className="mb-4">
-            We take mathematical and factual accuracy seriously. Our correction policy ensures that any identified errors are handled swiftly and transparently:
+            We are accountable to math. If we make a technical error, we fix it immediately:
           </p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Reporting:</strong> Users can report potential discrepancies via our <Link href="/contact" className="text-blue-600 hover:underline">Contact page</Link>. We investigate every report involving calculation logic within 48 business hours.</li>
-            <li><strong>Verification:</strong> Our technical team cross-references reported issues against official financial benchmarks and documentation.</li>
-            <li><strong>Resolution:</strong> If an error is verified, we immediately deploy a fix to the live calculator or article. We maintain a version history of our core calculation logic to prevent regressions.</li>
-            <li><strong>Transparency:</strong> Significant changes to calculator logic or methodology are noted in the "Last Updated" section of the relevant page.</li>
+          <ul className="list-disc pl-6 mb-8 space-y-2">
+            <li><strong>Reporting Mechanism:</strong> Users can flag potential logic errors via our <Link href="/contact" className="text-blue-600 hover:underline font-semibold">Contact page</Link>.</li>
+            <li><strong>48-Hour SLA:</strong> Any report questioning core calculation logic is investigated by our engineering team within 48 business hours.</li>
+            <li><strong>Silent Fixes vs. Public Logging:</strong> Minor UI bugs are fixed silently. If a foundational methodological error is discovered, the fix is deployed and the <em>Last Updated</em> timestamp on the trust badge is refreshed.</li>
           </ul>
 
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-12 text-sm text-gray-600">
-            <strong>Important Limitation:</strong> Calcida is a financial modeling software company, not a financial advisory firm, tax advisory firm, or legal provider. All output from our calculators is estimated and for educational use only. Always consult a certified financial planner, CPA, or other qualified professional before making significant financial commitments.
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mt-12 text-sm text-red-900">
+            <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              Crucial Legal Limitation (Not Financial Advice)
+            </h3>
+            <p className="leading-relaxed mb-0">
+              Calcida provides financial modeling software, but we are <strong>not</strong> a financial advisory firm, a tax advisory firm, or legal counsel. All output generated by our calculators is strictly estimated and intended for educational and informational use only. The exact mathematical reality of your finances depends on your unique situation, state laws, and institutional fees. <strong>Always consult a certified financial planner, CPA, or other licensed professional before making significant financial commitments.</strong>
+            </p>
           </div>
         </div>
       </div>

@@ -78,7 +78,7 @@ export function BiweeklyToHourlyArticle({ biweeklyNum }: Props) {
       <div className="my-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">The Biweekly Advantage</h2>
         <p>
-          Getting paid every two weeks means you receive 26 paychecks per year. This creates two "magic months" each year where you receive three paychecks instead of two. Many people use these extra checks to boost savings, pay down debt, or fund a vacation without impacting their regular monthly budget. For more help with your biweekly budgeting, try our <Link href="/paycheck-calculator" className="text-blue-600 hover:underline">Paycheck Estimator</Link>.
+          Getting paid every two weeks means you receive 26 paychecks per year. This creates two "magic months" each year where you receive three paychecks instead of two. Many people use these extra checks to boost savings, pay down debt, or fund a vacation without impacting their regular monthly budget. For more help with your biweekly budgeting, try our <Link href="/salary-calculators" className="text-blue-600 hover:underline">Salary & Paycheck</Link> hub.
         </p>
       </div>
 
@@ -111,8 +111,8 @@ export function BiweeklyToHourlyArticle({ biweeklyNum }: Props) {
           <Link href="/take-home-pay-calculator" className="px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold transition-all">
             Take-Home Pay Tool
           </Link>
-          <Link href="/salary-to-hourly-calculator" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
-            Salary Converter
+          <Link href="/salary-calculators" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
+            Income Hub
           </Link>
         </div>
       </div>

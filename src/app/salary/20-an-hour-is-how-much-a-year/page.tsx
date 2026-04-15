@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   title: '$20 an Hour Is How Much a Year? Salary Calculator',
   description: 'Convert $20/hour to yearly, monthly, weekly, and biweekly pay. Use a free hourly-to-salary calculator with hours/week and weeks/year inputs.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/salary/20-an-hour-is-how-much-a-year' },
+  alternates: { canonical: '/hourly-to-salary-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$20 an Hour Is How Much a Year?',
     description: 'Convert $20/hour to yearly pay and compare schedule assumptions.',

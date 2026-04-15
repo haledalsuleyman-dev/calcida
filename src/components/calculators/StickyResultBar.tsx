@@ -61,27 +61,28 @@ export function StickyResultBar({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-50 animate-in slide-in-from-bottom duration-300">
-      <div className="container mx-auto max-w-5xl flex items-center justify-between">
+    <div className="fixed bottom-0 left-0 right-0 glass border-t border-gray-200/50 shadow-[0_-8px_30px_rgb(0,0,0,0.08)] p-4 pb-safe z-50 animate-in slide-in-from-bottom duration-300">
+      <div className="container mx-auto max-w-5xl flex items-center justify-between gap-4">
         <div>
-          <div className="text-sm text-gray-500 font-medium">{label}</div>
-          <div className="text-xl font-bold text-gray-900">
+          <div className="text-[10px] md:text-xs text-blue-600 font-bold uppercase tracking-wider mb-0.5">{label}</div>
+          <div className="text-xl md:text-2xl font-black text-gray-900 leading-none">
             {typeof value === 'number' && prefix === '$' ? formatCurrency(value) : value}{suffix}
           </div>
           {secondaryLabel && secondaryValue !== undefined && (
-             <div className="text-xs text-gray-500 mt-0.5">
-                {secondaryLabel}: {formatCurrency(secondaryValue)}
+             <div className="text-[10px] md:text-xs text-gray-500 mt-1 font-medium">
+                {secondaryLabel}: <span className="text-gray-700">{formatCurrency(secondaryValue)}</span>
              </div>
           )}
         </div>
-        <Button 
-            onClick={handleCopy}
-            variant="outline"
-            size="sm"
-            className="shrink-0"
-        >
-            Copy & Share
-        </Button>
+        <div className="flex gap-2">
+            <Button 
+                onClick={handleCopy}
+                size="sm"
+                className="shrink-0 h-10 px-4"
+            >
+                Share
+            </Button>
+        </div>
       </div>
     </div>
   );

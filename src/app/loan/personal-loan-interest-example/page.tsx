@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: 'Personal Loan Interest Example: See How Interest Adds Up',
   description: 'See a personal loan interest example and estimate monthly payment and total interest with a free calculator. Compare APR and term scenarios.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/loan/personal-loan-interest-example' },
+  alternates: { canonical: '/personal-loan-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Personal Loan Interest Example',
     description: 'Understand how personal loan interest works and estimate total interest cost.',

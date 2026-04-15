@@ -1,7 +1,16 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/Accordion';
 import { CATEGORY_HUB_LINKS } from '@/lib/internalLinking';
+import { TrustBadge } from '@/components/TrustBadge';
+import { breadcrumbListJsonLd, faqPageJsonLd } from '@/lib/jsonld';
+
+const Accordion = dynamic(() => import('@/components/ui/Accordion').then(mod => mod.Accordion), { ssr: true });
+const AccordionContent = dynamic(() => import('@/components/ui/Accordion').then(mod => mod.AccordionContent), { ssr: true });
+const AccordionItem = dynamic(() => import('@/components/ui/Accordion').then(mod => mod.AccordionItem), { ssr: true });
+const AccordionTrigger = dynamic(() => import('@/components/ui/Accordion').then(mod => mod.AccordionTrigger), { ssr: true });
+
+import { AdSlot } from '@/components/ads/AdSlot';
 
 interface CategoryPageProps {
   title: string;
@@ -15,12 +24,34 @@ interface CategoryPageProps {
 export function CategoryPage({ title, description, calculators, children, faq, currentPath }: CategoryPageProps) {
   const crossLinks = currentPath ? CATEGORY_HUB_LINKS[currentPath] : undefined;
   
+  const schema = [
+    ...(currentPath ? [breadcrumbListJsonLd({
+      items: [
+        { name: 'Home', path: '/' },
+        { name: title, path: currentPath },
+      ]
+    })] : []),
+    ...(faq ? [faqPageJsonLd(faq)] : []),
+  ];
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
+      {schema.map((s, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
+        />
+      ))}
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold mb-4 text-gray-900">{title}</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">{description}</p>
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">{description}</p>
+        <div className="text-left max-w-3xl mx-auto">
+          <TrustBadge />
+        </div>
       </div>
+
+      <AdSlot id="cat-after-header" type="horizontal" className="mb-16" />
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         {calculators.map((calc) => (
@@ -38,6 +69,8 @@ export function CategoryPage({ title, description, calculators, children, faq, c
           </Link>
         ))}
       </div>
+
+      <AdSlot id="cat-after-grid" type="horizontal" className="mb-16" />
 
       {crossLinks && crossLinks.length > 0 && (
         <div className="mb-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
@@ -63,6 +96,8 @@ export function CategoryPage({ title, description, calculators, children, faq, c
           {children}
         </div>
       )}
+
+      <AdSlot id="cat-before-faq" type="horizontal" className="mb-16" />
 
       {faq && faq.length > 0 && (
         <div className="max-w-3xl mx-auto">

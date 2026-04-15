@@ -207,7 +207,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return pageMetadata({
       title: `${salaryStr} a Year Is How Much an Hour?`,
       description: `Convert ${salaryStr} salary to an hourly wage and review daily, weekly, biweekly, and monthly pay estimates for your schedule.`,
-      canonicalPath: `/${slug}`,
+      canonicalPath: `/salary-to-hourly-calculator`,
+      noindex: true,
     });
   }
 
@@ -218,7 +219,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return pageMetadata({
       title: `${hourlyStr} an Hour Is How Much a Year?`,
       description: `Convert ${hourlyStr} per hour into yearly, monthly, biweekly, and weekly pay so you can compare jobs and income scenarios quickly.`,
-      canonicalPath: `/${slug}`,
+      canonicalPath: `/hourly-to-salary-calculator`,
+      noindex: true,
     });
   }
 
@@ -229,7 +231,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return pageMetadata({
       title: `${monthlyStr} a Month Is How Much an Hour?`,
       description: `Convert ${monthlyStr} per month into an hourly wage, then compare weekly, biweekly, and annual income estimates in one place.`,
-      canonicalPath: `/${slug}`,
+      canonicalPath: `/salary-to-hourly-calculator`,
+      noindex: true,
     });
   }
 
@@ -240,7 +243,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return pageMetadata({
       title: `${biweeklyStr} Every Two Weeks Is How Much an Hour?`,
       description: `Convert a ${biweeklyStr} biweekly paycheck into an hourly rate and review the matching monthly and yearly pay breakdown.`,
-      canonicalPath: `/${slug}`,
+      canonicalPath: `/salary-to-hourly-calculator`,
+      noindex: true,
     });
   }
 

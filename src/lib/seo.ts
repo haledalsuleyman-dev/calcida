@@ -47,6 +47,7 @@ function calculatorMetaDescription(inputDescription: string): string {
   return truncate(cleanText(inputDescription), 160);
 }
 
+// @ts-ignore
 export function pageMetadata(input: {
   title: string;
   description: string;
@@ -54,6 +55,7 @@ export function pageMetadata(input: {
   type?: 'website' | 'article';
   publishedTime?: string;
   modifiedTime?: string;
+  noindex?: boolean;
 }): Metadata {
   const title = cleanText(input.title);
   const description = truncate(cleanText(input.description), 160);
@@ -64,6 +66,7 @@ export function pageMetadata(input: {
     title,
     description,
     alternates: { canonical },
+    ...(input.noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: composeMetaTitle(title),
       description,

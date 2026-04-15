@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   title: `$70,000 After Tax (${new Date().getFullYear()}): Estimate Take-Home Pay`,
   description: 'Estimate $70,000 salary after tax with a fast take-home pay calculator. Compare monthly and per-paycheck net pay with deductions—free.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/salary/70000-after-tax' },
+  alternates: { canonical: '/after-tax-income-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$70,000 After Tax: Estimate Take-Home Pay',
     description: 'Estimate take-home pay on a $70k salary after taxes and deductions.',

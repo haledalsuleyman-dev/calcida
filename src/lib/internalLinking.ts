@@ -205,6 +205,60 @@ export const NEXT_STEP_SUGGESTIONS: Partial<Record<CalculatorId, NextStepSuggest
       { label: 'Net Worth', href: '/net-worth-calculator' },
     ],
   },
+  'apr': {
+    title: 'Compare the true cost of borrowing',
+    description: 'Use our comparison tool to find the best loan offer.',
+    primaryAction: { label: 'Loan Comparison', href: '/loan-comparison-calculator' },
+    secondaryActions: [
+      { label: 'Mortgage Calc', href: '/mortgage-payment-calculator' },
+      { label: 'Auto Loan', href: '/auto-loan-calculator' },
+    ],
+  },
+  'loan-comparison': {
+    title: 'Finalize your financing plan',
+    description: 'Calculate your exact monthly payments and amortization.',
+    primaryAction: { label: 'Personal Loan', href: '/personal-loan-calculator' },
+    secondaryActions: [
+      { label: 'APR Calculator', href: '/apr-calculator' },
+      { label: 'Debt Payoff', href: '/debt-payoff-calculator' },
+    ],
+  },
+  'mortgage-affordability': {
+    title: 'Ready to estimate your monthly payment?',
+    description: 'Calculate your specific mortgage costs including taxes and insurance.',
+    primaryAction: { label: 'Mortgage Calculator', href: '/mortgage-payment-calculator' },
+    secondaryActions: [
+      { label: 'Down Payment', href: '/down-payment-calculator' },
+      { label: 'Amortization', href: '/mortgage-amortization-calculator' },
+    ],
+  },
+  'car-affordability': {
+    title: 'Find the right financing',
+    description: 'Calculate your monthly auto loan payments.',
+    primaryAction: { label: 'Auto Loan Calc', href: '/auto-loan-calculator' },
+    secondaryActions: [
+      { label: 'Loan Comparison', href: '/loan-comparison-calculator' },
+      { label: 'Budget Planner', href: '/budget-calculator' },
+    ],
+  },
+  'retirement-savings': {
+    title: 'Plan your retirement strategy',
+    description: 'See how your 401k and IRA contributions add up.',
+    primaryAction: { label: '401k Calculator', href: '/401k-calculator' },
+    secondaryActions: [
+      { label: 'FIRE Calculator', href: '/fire-calculator' },
+      { label: 'Compound Interest', href: '/compound-interest-calculator' },
+    ],
+  },
+  'fire': {
+    title: 'Accelerate your independence',
+    description: 'Model your investment returns more precisely.',
+    primaryAction: { label: 'Investment Return', href: '/investment-return-calculator' },
+    secondaryActions: [
+      { label: 'Retirement Calc', href: '/retirement-calculator' },
+      { label: 'Savings Goal', href: '/savings-goal-calculator' },
+    ],
+  },
 };
 
 export const CROSS_CATEGORY_SUGGESTIONS: Record<string, CrossCategoryLink> = {
@@ -244,13 +298,31 @@ export const CROSS_CATEGORY_SUGGESTIONS: Record<string, CrossCategoryLink> = {
       { label: 'Compound Interest', href: '/compound-interest-calculator' },
     ],
   },
+  'credit-card': {
+    title: 'Related Financial Tools',
+    description: 'Optimize your debt strategy with these tools:',
+    links: [
+      { label: 'Debt Payoff Planner', href: '/debt-payoff-calculator' },
+      { label: 'Loan Comparison', href: '/loan-comparison-calculator' },
+      { label: 'Budget Calculator', href: '/budget-calculator' },
+    ],
+  },
+  'tax': {
+    title: 'Related Financial Tools',
+    description: 'Optimize your after-tax income:',
+    links: [
+      { label: 'Take-Home Pay', href: '/paycheck-calculator' },
+      { label: 'Salary Converter', href: '/salary-to-hourly-calculator' },
+      { label: '401k Planning', href: '/401k-calculator' },
+    ],
+  },
   finance: {
     title: 'Related Financial Tools',
     description: 'Explore more tools for your financial journey:',
     links: [
       { label: 'Salary Calculators', href: '/salary-calculators' },
       { label: 'Retirement Planning', href: '/retirement-calculators' },
-      { label: 'Tax Calculators', href: '/tax-calculators' },
+      { label: 'Budgeting Tools', href: '/budget-calculators' },
     ],
   },
 };

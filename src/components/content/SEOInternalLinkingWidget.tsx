@@ -29,6 +29,18 @@ export const SEOInternalLinkingWidget = () => {
         >
           Biweekly to Hourly Guide
         </Link>
+        <Link 
+          href="/salary-calculators" 
+          className="block p-3 bg-blue-50 rounded border border-blue-100 hover:border-blue-500 hover:shadow-sm transition-all text-sm font-bold text-blue-700"
+        >
+          Salary & Paycheck Hub
+        </Link>
+        <Link 
+          href="/tax-calculators" 
+          className="block p-3 bg-blue-50 rounded border border-blue-100 hover:border-blue-500 hover:shadow-sm transition-all text-sm font-bold text-blue-700"
+        >
+          Income Tax Hub
+        </Link>
       </div>
     </div>
   );

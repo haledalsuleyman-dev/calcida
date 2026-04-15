@@ -126,16 +126,19 @@ export function SalaryToHourlyArticle({ salaryNum }: Props) {
           <p className="mb-4">
             Remember that {salaryStr} is your <em>gross</em> income. After federal and state taxes, your actual "take-home" pay will be closer to <strong>{takeHomeStr}</strong> per month.
           </p>
-          <Link href="/take-home-pay-calculator" className="inline-flex items-center text-blue-600 hover:text-blue-800 font-bold transition-colors">
+          <Link href="/paycheck-calculator" className="inline-flex items-center text-blue-600 hover:text-blue-800 font-bold transition-colors">
             Calculate your exact take-home pay <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
           </Link>
+          <div className="mt-2 text-sm text-gray-500">
+            For more income tools, visit the <Link href="/salary-calculators" className="text-blue-600 hover:underline">Salary & Paycheck hub</Link>.
+          </div>
         </div>
       </div>
 
       <div className="bg-gray-900 text-white rounded-2xl p-8 my-12 text-center">
         <h3 className="text-2xl font-bold mb-4">Optimize Your Income</h3>
         <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-          Use our specialized <Link href="/salary-to-hourly-calculator" className="text-blue-400 hover:text-blue-300 underline">Salary to Hourly Calculator</Link> to dive deeper into your finances and plan for your next big milestone.
+          Explore more tools in our <Link href="/salary-calculators" className="text-blue-400 hover:text-blue-300 underline font-medium">Salary Calculators</Link> and <Link href="/tax-calculators" className="text-blue-400 hover:text-blue-300 underline font-medium">Tax Estimators</Link> sections to dive deeper into your finances.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/salary-to-hourly-calculator" className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20">

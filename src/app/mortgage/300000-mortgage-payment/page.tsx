@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   title: '$300,000 Mortgage Payment: Estimated Monthly Cost & Breakdown',
   description: 'How much is the monthly payment on a $300,000 mortgage? See your estimated principal and interest, plus how taxes and insurance impact your all-in cost.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/mortgage/300000-mortgage-payment' },
+  alternates: { canonical: '/mortgage-payment-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$300,000 Mortgage Payment: Monthly Breakdown',
     description: 'Calculate your monthly payment for a $300,000 mortgage including taxes and insurance.',

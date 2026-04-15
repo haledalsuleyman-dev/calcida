@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: '50000 a Year Is How Much an Hour? Salary to Hourly Calculator',
   description: 'Convert a $50,000 salary to hourly pay fast. See hourly, weekly, and monthly breakdowns based on hours/week and weeks/year—free.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/salary/50000-to-hourly' },
+  alternates: { canonical: '/salary-to-hourly-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '50000 a Year Is How Much an Hour?',
     description: 'Convert $50,000/year to hourly pay with a realistic work schedule.',

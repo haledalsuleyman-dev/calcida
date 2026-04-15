@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useMemo, useState, useRef } from 'react';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts';
+import dynamic from 'next/dynamic';
+
+const MortgagePieChart = dynamic(() => import('./MortgagePieChart'), { 
+  ssr: false,
+  loading: () => <div className="h-full w-full flex items-center justify-center bg-gray-50 rounded-full border border-dashed border-gray-200 text-gray-400 text-xs">Loading Chart...</div>
+});
 import { ClientOnlyChart } from '@/components/charts/ClientOnlyChart';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -384,11 +382,13 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
       <div className="lg:col-span-8 space-y-8">
         
         {/* Primary Result Card */}
-        <div ref={resultCardRef} className="bg-blue-50 p-8 rounded-lg border border-blue-100 text-center shadow-sm">
-          <h2 className="text-xl font-semibold text-blue-900 mb-2">
+        <div ref={resultCardRef} className="bg-gradient-to-br from-blue-600 to-blue-800 p-10 rounded-3xl text-center shadow-2xl shadow-blue-500/20 relative overflow-hidden">
+          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <h2 className="text-lg font-bold text-blue-100 mb-2 relative z-10">
             {paymentFrequency === 'biweekly' ? 'Estimated Bi-Weekly Payment' : 'Estimated Monthly Payment'}
           </h2>
-          <div className="text-5xl font-bold text-blue-700 mb-6">
+          <div className="text-6xl md:text-7xl font-black text-white tracking-tighter relative z-10 mb-8 animate-in zoom-in-95 duration-500">
             {paymentFrequency === 'biweekly' && result.biWeeklyPayment 
                 ? formatCurrency(result.biWeeklyPayment) 
                 : formatCurrency(result.totalMonthlyPayment)}
@@ -396,27 +396,30 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
           
           {/* Comparison for Bi-Weekly */}
           {paymentFrequency === 'biweekly' && (
-              <div className="mb-6 text-blue-800 bg-blue-100/50 py-2 rounded-md inline-block px-4">
-                  <span className="font-medium">Standard Monthly: </span>
-                  {formatCurrency(result.totalMonthlyPayment)}
+              <div className="mb-8 p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10 text-white relative z-10">
+                  <span className="font-bold opacity-70 uppercase tracking-widest text-xs block mb-1">Standard Monthly</span>
+                  <span className="text-xl font-black">{formatCurrency(result.totalMonthlyPayment)}</span>
               </div>
           )}
 
           {hasSavings && (
-              <div className="mb-6 p-4 bg-green-100 rounded-md border border-green-200 text-left">
-                  <div className="text-green-800 font-bold text-lg mb-1 flex items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      You save {formatCurrency(result.savings)} in interest!
+              <div className="mb-8 p-6 bg-white rounded-2xl text-left relative z-10 shadow-xl">
+                  <div className="text-green-600 font-black text-xl mb-1 flex items-center gap-2">
+                      <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                      </div>
+                      Save {formatCurrency(result.savings)}
                   </div>
-                  <div className="text-green-700">
-                      You will pay off your mortgage <strong>{Math.floor(result.payoffMonths / 12)} years and {result.payoffMonths % 12} months</strong> sooner.
+                  <div className="text-gray-600 leading-relaxed pl-10 capitalize font-medium">
+                      Pay off your mortgage <span className="text-gray-900 font-black">{Math.floor(result.payoffMonths / 12)} years and {result.payoffMonths % 12} months</span> sooner.
                   </div>
               </div>
           )}
           
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 relative z-10">
              <Button 
                 size="lg"
+                className="bg-white text-blue-700 hover:bg-blue-50 px-10 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95 shadow-xl shadow-black/10"
                 onClick={() => {
                     const text = paymentFrequency === 'biweekly' 
                         ? `My estimated bi-weekly mortgage payment is ${formatCurrency(result.biWeeklyPayment || 0)}`
@@ -425,9 +428,18 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                     alert("Result copied to clipboard!");
                 }}
              >
-               Copy & Share
+               Share Results
              </Button>
-             <Button variant="outline" size="lg" onClick={handleDownloadCSV}>
+             <Button 
+                variant="outline" 
+                size="lg" 
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 px-8 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95"
+                onClick={handleDownloadCSV}
+             >
+               Full Report
+             </Button>
+          </div>
+        </div>
                Download CSV
              </Button>
           </div>
@@ -439,26 +451,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                 <h3 className="text-lg font-semibold mb-6">Payment Breakdown</h3>
                 <div className="h-[250px] min-h-[250px]">
                     <ClientOnlyChart className="h-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                        <Pie
-                        data={chartData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        fill="#8884d8"
-                        paddingAngle={5}
-                        dataKey="value"
-                        >
-                        {chartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                        <Legend />
-                    </PieChart>
-                    </ResponsiveContainer>
+                        <MortgagePieChart data={chartData} />
                     </ClientOnlyChart>
                 </div>
             </div>

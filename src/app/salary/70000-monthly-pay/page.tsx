@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: '$70,000 a Year Is How Much a Month? Monthly Pay Calculator',
   description: 'Convert a $70,000 salary to monthly pay fast. See gross monthly income and compare scenarios with a free monthly salary calculator.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/salary/70000-monthly-pay' },
+  alternates: { canonical: '/after-tax-income-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$70,000 a Year Is How Much a Month?',
     description: 'Convert $70,000/year to monthly pay and explore scenarios.',

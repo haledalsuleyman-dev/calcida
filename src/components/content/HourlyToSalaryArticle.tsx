@@ -157,7 +157,7 @@ export function HourlyToSalaryArticle({ hourlyNum }: Props) {
       <div className="my-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Why the Hourly-to-Salary Conversion Matters</h2>
         <p>
-          Converting your hourly wage to an annual salary provides a clearer picture of your financial standing. It allows you to use standard budgeting tools, compare your income against national averages, and qualify for financial products like mortgages or car loans, which typically evaluate borrowers based on their gross annual income. For more information on how this affects your purchasing power, check our <Link href="/mortgage-payment-calculator" className="text-blue-600 hover:underline">Mortgage Payment Calculator</Link>.
+          Converting your hourly wage to an annual salary provides a clearer picture of your financial standing. It allows you to use standard <Link href="/budget-calculators" className="text-blue-600 hover:underline">budgeting tools</Link>, compare your income against national averages, and qualify for financial products like mortgages or car loans, which typically evaluate borrowers based on their gross annual income. For more information on how this affects your purchasing power, check our <Link href="/mortgage-payment-calculator" className="text-blue-600 hover:underline">Mortgage Payment Calculator</Link>.
         </p>
       </div>
 
@@ -222,10 +222,10 @@ export function HourlyToSalaryArticle({ hourlyNum }: Props) {
             Paycheck Calculator
           </Link>
           <Link href="/salary-to-hourly-calculator" className="px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-xl font-bold transition-all">
-            Salary Converter
+            Daily Wage Converter
           </Link>
-          <Link href="/mortgage-payment-calculator" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
-            Mortgage Tool
+          <Link href="/salary-calculators" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
+            More Salary Tools
           </Link>
         </div>
       </div>

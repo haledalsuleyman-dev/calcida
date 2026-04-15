@@ -26,6 +26,8 @@ export interface CalculatorPageProps {
     secondaryActions: { label: string; href: string }[];
   };
   categoryOverride?: { key: CategoryKey; name: string; href: string };
+  intro?: React.ReactNode;
+  formula?: React.ReactNode;
 }
 
 function normalizeQuestion(input: string): string {
@@ -261,7 +263,9 @@ export function CalculatorPage(props: CalculatorPageProps) {
   const faq = ensureFaqCount(props.spec, hub.name, props.faq ?? props.spec.faqs);
 
   let intro: React.ReactNode;
-  if (props.spec.id === 'bill-split') {
+  if (props.intro) {
+    intro = props.intro;
+  } else if (props.spec.id === 'bill-split') {
     intro = (
       <div className="space-y-3 text-gray-600 text-lg leading-relaxed">
         <p>Split a shared bill evenly in seconds. Enter the bill amount, tip percentage, and number of people to get a clear per-person total.</p>
@@ -489,7 +493,7 @@ export function CalculatorPage(props: CalculatorPageProps) {
       relatedCalculators={relatedCalculators}
       relatedArticles={props.relatedArticles ?? props.spec.relatedArticles}
       howItWorks={props.howItWorks}
-      formula={seoContent ? <CalculatorFormula formula={seoContent.formula} /> : <p>This calculator uses standard financial math to estimate the result from your inputs.</p>}
+      formula={props.formula ?? (seoContent ? <CalculatorFormula formula={seoContent.formula} /> : <p>This calculator uses standard financial math to estimate the result from your inputs.</p>)}
       example={props.example ?? (seoContent ? <CalculatorExample example={seoContent.example} /> : <p>Enter sample values in the calculator above to see an example result and then adjust inputs to compare scenarios.</p>)}
       guide={props.guide}
       schema={schema}

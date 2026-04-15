@@ -5,134 +5,130 @@ import { calculatorMetadata } from '@/lib/seo';
 import type { JsonLdFaqItem } from '@/lib/jsonld';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import React from 'react';
 
 const spec = getCalculatorSpec('income-tax');
 const currentYear = new Date().getFullYear();
 
 export const metadata: Metadata = calculatorMetadata({
-  title: `Federal Income Tax Calculator (${currentYear}): Estimate Your Tax Bill`,
-  description: `Estimate your ${currentYear} federal income tax bill. Enter your income, filing status, and deductions to see your tax bracket, effective rate, and refund estimate.`,
+  title: `Federal Income Tax Calculator (${currentYear}): Check Your Brackets`,
+  description: `Estimate your ${currentYear} federal income tax bill. Understand your effective tax rate, marginal tax brackets, and optimize your deductions.`,
   canonicalPath: spec.route,
 });
 
-const FAQ: readonly JsonLdFaqItem[] = [
+const TAX_FAQ: readonly JsonLdFaqItem[] = [
   {
-    question: 'How is federal income tax calculated in the U.S.?',
-    answer:
-      'The U.S. uses a progressive tax system with seven federal brackets (10%, 12%, 22%, 24%, 32%, 35%, 37%). Each rate applies only to the income within that bracket — not your total income. For example, in 2026 a single filer earning $60,000 pays 10% on the first ~$11,925, 12% on income between ~$11,925 and ~$48,475, and 22% on the remainder.',
+    question: "What is the difference between marginal and effective tax rates?",
+    answer: "Your 'marginal' tax rate is the highest bracket you reach—meaning it's the percentage of tax you pay on your very last dollar earned. Your 'effective' tax rate is the blended average rate you pay across all your income. Your effective rate is always significantly lower than your marginal rate."
   },
   {
-    question: `What are the ${currentYear} federal income tax brackets?`,
-    answer: `For ${currentYear}, the seven federal income tax rates are 10%, 12%, 22%, 24%, 32%, 35%, and 37%. The exact bracket thresholds are adjusted each year for inflation by the IRS. Use this calculator to see the current brackets applied to your specific income and filing status.`,
+    question: "How do progressive tax brackets work?",
+    answer: "The US uses progressive tax brackets. Imagine buckets. Your first $11,000 fills the 10% bucket. Your income from $11,001 up to $44,000 fills the 12% bucket. If you earn $50,000, only the final $6,000 spills into the 22% bucket. You do NOT pay 22% on the entire $50,000."
   },
   {
-    question: 'What is the standard deduction for 2026?',
-    answer:
-      'The standard deduction is adjusted annually for inflation. For 2026, estimates based on IRS inflation adjustments put it at approximately $15,350 for single filers and $30,700 for married filing jointly. Use this calculator with updated figures for the most accurate estimate.',
+    question: "What is the Standard Deduction?",
+    answer: "The standard deduction is a flat, zero-tax amount created by the IRS to shield your baseline living income from federal taxes. You subtract it directly from your gross income to lower your 'Taxable Income'."
   },
   {
-    question: 'What is my marginal vs. effective tax rate?',
-    answer:
-      'Your marginal rate is the rate on your last dollar of income (your highest bracket). Your effective rate is your total tax bill divided by total income — it is always lower than your marginal rate because of lower rates applied to the first portions of income.',
+    question: "How can I legally lower my tax bill?",
+    answer: "The best ways to reduce taxable income are contributing to pre-tax retirement accounts (Traditional 401(k), Traditional IRA), funding Health Savings Accounts (HSAs), and claiming all available credits like the Child Tax Credit."
   },
   {
-    question: 'Does this calculator include state income tax?',
-    answer:
-      'This calculator estimates federal income tax only. State tax rates vary widely — from 0% in states like Texas and Florida to over 13% in California. For a complete picture, research your state\'s rate separately.',
-  },
-  {
-    question: 'How can I legally reduce my federal income tax?',
-    answer:
-      'Common tax-reduction strategies include maximizing pre-tax contributions to a Traditional 401(k) or IRA, contributing to an HSA, claiming eligible credits (Child Tax Credit, EITC, education credits), and timing capital gains/losses strategically. Consult a qualified tax professional for personalized advice.',
-  },
+    question: "Are FICA taxes the same as income taxes?",
+    answer: "No. Federal income taxes fund the US government generally. FICA taxes (7.65%) strictly fund Social Security and Medicare. FICA is taken out via payroll deductions completely separately from your income tax brackets."
+  }
 ];
 
 export default function IncomeTaxCalculatorPage() {
   return (
     <CalculatorPage
       spec={spec}
-      faq={FAQ}
+      faq={TAX_FAQ}
+      intro={
+        <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
+          <p>
+            Understanding the United States tax code feels like trying to decipher a foreign language. But once you grasp how progressive tax brackets actually work, you unlock the ability to legally protect thousands of your own dollars.
+          </p>
+          <p>
+            Our <strong>{currentYear} Federal Income Tax Calculator</strong> strips away the confusion. We calculate your estimated tax bill, explicitly separate your effective rate from your marginal rate, and demonstrate precisely how the standard deduction operates.
+          </p>
+          <p>
+            Run the numbers to predict your tax burden ahead of time, ensuring you never receive a surprise tax bill in April.
+          </p>
+        </div>
+      }
       howItWorks={
         <div className="space-y-4 text-gray-700">
           <p>
-            This calculator estimates your federal income tax using the IRS progressive bracket system
-            for the current tax year. It applies the standard deduction automatically and models each
-            bracket individually to show your tax breakdown.
+            Your total gross salary is essentially run through an IRS filter. Here is how your numbers get separated, shrunk down, and taxed:
           </p>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 my-4">
-            <h3 className="font-bold text-gray-900 mb-3">How the Calculation Works</h3>
-            <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-4">
+            <h3 className="font-bold text-gray-900 mb-3 text-lg">The 3-Step Taxation Algorithm</h3>
+            <ol className="list-decimal pl-5 space-y-3">
               <li>
-                <strong>Gross income → Taxable income:</strong> The standard deduction is subtracted
-                from your gross income. Pre-tax contributions (401k, HSA) reduce income further.
+                <span className="font-medium text-gray-900">Determine Taxable Income:</span> We take your total Gross Income and immediately subtract the Standard Deduction for your filing status (Single, Married, Head of Household).
               </li>
               <li>
-                <strong>Bracket application:</strong> The first layer of taxable income is taxed at
-                10%, the next layer at 12%, and so on — each bracket applies only to that specific
-                slice of income.
+                <span className="font-medium text-gray-900">Run the Bracket Engine:</span> We push your new Taxable Income through the 7 IRS brackets (10%, 12%, 22%, 24%, 32%, 35%, 37%). As your money fills a lower tier, the remaining balance pushes into the higher tier.
               </li>
               <li>
-                <strong>Effective rate:</strong> Total federal tax divided by total gross income
-                gives your effective (average) rate — typically much lower than your top bracket.
-              </li>
-              <li>
-                <strong>FICA taxes:</strong> Social Security (6.2%, up to the wage base) and
-                Medicare (1.45%) are calculated separately and shown in the breakdown.
+                <span className="font-medium text-gray-900">Synthesize Total Tax:</span> We add the tax generated from each bucket together to produce your total Federal Tax liability.
               </li>
             </ol>
           </div>
-          <p>
-            Results are estimates for planning purposes. Your actual tax depends on deductions,
-            credits, and circumstances not modeled here.
+        </div>
+      }
+      formula={
+        <div className="space-y-4 text-gray-700">
+          <p>The core concept the IRS relies on is identifying your Taxable base:</p>
+          <div className="bg-white p-4 rounded border border-gray-200 font-mono text-center text-lg my-4 space-y-2">
+            <p>Taxable Income = Gross Pay - (Pre-Tax Deductions + Standard Deduction)</p>
+          </div>
+          <p className="text-sm">
+            Once Taxable Income is identified, it is simply subjected to tiered percentages.
           </p>
         </div>
       }
       example={
         <div className="bg-blue-50 border border-blue-100 rounded-lg p-6">
-          <p className="font-semibold text-blue-900 mb-3">
-            Example: Single Filer, $75,000 Income ({currentYear})
+          <p className="font-bold text-blue-900 mb-4 text-lg">
+            Example: Why Gross Pay is a Lie
           </p>
-          <div className="text-sm text-gray-700 space-y-2">
-            <div className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Gross Income</span>
-              <span className="font-medium">$75,000</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Standard Deduction (est.)</span>
-              <span className="font-medium">−$15,350</span>
-            </div>
-            <div className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Taxable Income</span>
-              <span className="font-medium">$59,650</span>
-            </div>
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>10% on first ~$11,925</span>
-              <span>$1,193</span>
-            </div>
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>12% on ~$11,925–$48,475</span>
-              <span>$4,386</span>
-            </div>
-            <div className="flex justify-between text-xs text-gray-500 border-b border-blue-200 pb-2">
-              <span>22% on ~$48,475–$59,650</span>
-              <span>$2,459</span>
-            </div>
-            <div className="flex justify-between font-semibold text-blue-900 pt-1">
-              <span>Estimated Federal Tax</span>
-              <span>~$8,038</span>
-            </div>
-            <div className="flex justify-between text-blue-700">
-              <span>Effective Tax Rate</span>
-              <span>~10.7%</span>
-            </div>
-            <div className="flex justify-between text-blue-700">
-              <span>Marginal Rate</span>
-              <span>22%</span>
-            </div>
-          </div>
-          <p className="text-xs text-blue-700 mt-3">
-            *Brackets adjusted for {currentYear} inflation estimates. Actual brackets published by
-            the IRS may vary slightly.
+          <p className="mb-4 text-gray-700">Let's witness how progressive taxation operates on a very common scenario: A Single Filer earning $80,000 a year.</p>
+          
+          <ul className="space-y-2 text-gray-700 list-none pl-0">
+            <li className="flex justify-between border-b border-blue-200 pb-2">
+              <span>Total Gross Income:</span> <span className="font-medium">$80,000</span>
+            </li>
+            <li className="flex justify-between border-b border-blue-200 pb-2">
+              <span>Less Approx Standard Deduction:</span> <span className="font-medium text-red-600">-$15,000</span>
+            </li>
+            <li className="flex justify-between pb-2 pt-1 bg-blue-100 px-2 rounded">
+              <span className="font-medium text-blue-900">Actual Taxable Income Base:</span> <span className="font-bold text-blue-900">$65,000</span>
+            </li>
+            
+            <li className="pt-3 pb-1 font-bold text-sm text-gray-500 uppercase tracking-wide">Bracket Breakdown:</li>
+            <li className="flex justify-between text-sm ml-4 border-l-2 border-blue-300 pl-2">
+              <span>The 10% Bracket slices off:</span> <span>~$1,200</span>
+            </li>
+            <li className="flex justify-between text-sm ml-4 border-l-2 border-blue-300 pl-2">
+              <span>The 12% Bracket slices off:</span> <span>~$4,400</span>
+            </li>
+            <li className="flex justify-between text-sm ml-4 border-l-2 border-blue-300 pl-2 border-b border-blue-100 pb-2">
+              <span>The 22% Bracket slices off:</span> <span>~$3,600</span>
+            </li>
+            
+            <li className="flex justify-between pt-2 mt-2">
+              <span className="text-xl font-bold text-blue-900">Total Federal Tax:</span> 
+              <span className="text-xl font-bold text-blue-900">~$9,200</span>
+            </li>
+            <li className="flex justify-between pt-1 text-blue-800">
+              <span className="font-medium text-sm">Marginal Bracket vs. Effective Rate</span> 
+              <span className="font-medium text-sm">22% vs. 11.5%</span>
+            </li>
+          </ul>
+          <p className="mt-4 text-sm text-blue-800 italic">
+            *Notice how they hit the terrifying 22% bracket, but because of the buckets, their ACTUAL effective tax rate is only 11.5%.
           </p>
         </div>
       }
@@ -140,62 +136,27 @@ export default function IncomeTaxCalculatorPage() {
         <article className="space-y-8 text-gray-800">
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-900">
-              How to Reduce Your Income Tax Bill
+              Myth: A Raise Will Lower Your Pay
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>
-                <strong>Max out your 401(k):</strong> In {currentYear}, you can contribute up to
-                $23,500 ($31,000 if 50+) pre-tax, directly reducing your taxable income.
-              </li>
-              <li>
-                <strong>Contribute to a Traditional IRA:</strong> Depending on your income and
-                workplace plan, up to $7,000 ($8,000 if 50+) may be deductible.
-              </li>
-              <li>
-                <strong>Fund your HSA:</strong> Health Savings Account contributions are triple
-                tax-advantaged — deductible now, grow tax-free, and withdraw tax-free for medical
-                expenses.
-              </li>
-              <li>
-                <strong>Harvest capital losses:</strong> Offset investment gains with realized losses
-                to reduce your tax liability.
-              </li>
-              <li>
-                <strong>Time your income:</strong> Deferring income to years with lower earnings can
-                keep you in a lower bracket.
-              </li>
-            </ul>
+            <p className="mb-4 text-gray-700">
+              You will hear people say, <em>"I don't want a raise. It will push me into a higher tax bracket and I'll make less money!"</em>
+            </p>
+            <p className="mb-4 text-gray-700">
+              This is mathematically impossible. Because we use progressive tax brackets, ONLY the income that crosses the boundary line gets subjected to the higher tax rate. The money you earned below the line is completely unaffected. A raise will always result in more net money in your pocket.
+            </p>
           </section>
+          
           <section>
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Related Tax Calculators</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">Analyze Your Income Further</h2>
+            <p className="mb-4 text-gray-700">Take your tax planning to the next level by visualizing how different financial vehicles interact with the tax code.</p>
             <div className="grid sm:grid-cols-2 gap-4">
-              <Link
-                href="/tax-bracket-calculator"
-                className="p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block"
-              >
-                <span className="font-bold text-blue-600 block">Tax Bracket Calculator</span>
-                <span className="text-sm text-gray-500">See exactly how each bracket applies to your income.</span>
+              <Link href="/paycheck-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block no-underline group">
+                <span className="font-bold text-blue-600 block text-lg group-hover:underline">Paycheck Simulator</span>
+                <span className="text-sm text-gray-500 mt-2 block">Overlay your State taxes, FICA taxes, and Health Care premiums to find your real-world take home pay.</span>
               </Link>
-              <Link
-                href="/effective-tax-rate-calculator"
-                className="p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block"
-              >
-                <span className="font-bold text-blue-600 block">Effective Tax Rate Calculator</span>
-                <span className="text-sm text-gray-500">Your average real tax rate vs. marginal rate.</span>
-              </Link>
-              <Link
-                href="/paycheck-calculator"
-                className="p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block"
-              >
-                <span className="font-bold text-blue-600 block">Paycheck Calculator</span>
-                <span className="text-sm text-gray-500">Estimate your take-home pay after all withholdings.</span>
-              </Link>
-              <Link
-                href="/self-employment-tax-calculator"
-                className="p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block"
-              >
-                <span className="font-bold text-blue-600 block">Self-Employment Tax Calculator</span>
-                <span className="text-sm text-gray-500">Estimate SE tax if you're self-employed or a freelancer.</span>
+              <Link href="/401k-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors block no-underline group">
+                <span className="font-bold text-blue-600 block text-lg group-hover:underline">401(k) Pre-Tax Shielding</span>
+                <span className="text-sm text-gray-500 mt-2 block">Find out how utilizing a Traditional 401(k) drops your "Taxable Income Base" before the IRS brackets even touch it.</span>
               </Link>
             </div>
           </section>

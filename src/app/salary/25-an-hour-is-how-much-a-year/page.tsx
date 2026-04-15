@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   title: '$25 an Hour Is How Much a Year? Salary Calculator',
   description: 'Convert $25/hour to yearly, monthly, weekly, and biweekly pay. Use a free hourly-to-salary calculator with schedule assumptions—fast.',
   metadataBase: new URL(getSiteUrl()),
-  alternates: { canonical: '/salary/25-an-hour-is-how-much-a-year' },
+  alternates: { canonical: '/hourly-to-salary-calculator' },
+  robots: { index: false, follow: true },
   openGraph: {
     title: '$25 an Hour Is How Much a Year?',
     description: 'Convert $25/hour to yearly pay and compare schedule assumptions.',

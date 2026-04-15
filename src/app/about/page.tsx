@@ -5,18 +5,21 @@ import { JsonLd } from '@/components/JsonLd';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'About Calcida and Our Calculator Standards',
-  description: 'Learn how Calcida builds financial calculators, reviews formulas, updates assumptions, and prioritizes accuracy, transparency, and usability.',
+  title: 'About Calcida | Demystifying complex financial math',
+  description: 'Learn how Calcida builds accurate financial calculators, reviews mathematical formulas, and prioritizes transparency and usability for all users.',
   canonicalPath: '/about',
 });
 
 const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Calcida",
-    "url": getSiteUrl(),
-    "logo": `${getSiteUrl()}/logo.png`,
-    "description": "Free online financial calculators for mortgage, loans, and salary."
+    "@type": "AboutPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Calcida",
+      "url": getSiteUrl(),
+      "logo": `${getSiteUrl()}/logo.png`,
+      "description": "Free online educational financial calculators designed to demystify complex math for everyone."
+    }
   };
 
 export default function AboutPage() {
@@ -24,68 +27,65 @@ export default function AboutPage() {
     <>
       <JsonLd data={jsonLd} />
       <div className="container mx-auto px-4 py-12 max-w-3xl">
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">About Calcida</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 border-b border-gray-200 pb-4">About Calcida</h1>
         
-        <div className="prose prose-blue max-w-none text-gray-700">
-          <p className="text-xl leading-relaxed mb-6">
-            Calcida is built by a dedicated team of software engineers, financial analysts, and personal finance enthusiasts. Our mission is to simplify complex financial decisions through powerful, accurate, and easy-to-use calculators.
+        <div className="prose prose-lg prose-blue max-w-none text-gray-700">
+          <p className="text-xl leading-relaxed mb-8 text-gray-800 font-medium">
+            Calcida is built by a dedicated team of software engineers, financial analysts, and personal finance advocates. We believe that objective mathematical truth should be accessible to everyone, free from predatory marketing.
           </p>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">Who Builds Our Tools?</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 text-gray-900">What Problem Does Calcida Solve?</h2>
           <p className="mb-4">
-            Our tools are developed by a team with deep expertise in both financial mathematics and modern software engineering. We combine rigorous quantitative analysis with a focus on user experience to ensure that every calculation is both mathematically sound and easy to understand.
+            The modern financial landscape is overly complex. Banks hide behind obscure terminology, loan origination fees are buried in fine print, and tax brackets are profoundly misunderstood. 
+          </p>
+          <p className="mb-6">
+            We built Calcida because we were tired of encountering financial calculators that required users to surrender an email address, or worse, skewed the math to sell a high-interest loan. **Our platform solves the problem of financial ambiguity.** We provide calculators that execute rigorous mathematical formulas instantly in your browser, giving you a completely objective look at your finances.
           </p>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">How Accuracy is Ensured</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 text-gray-900">How Our Calculators Work</h2>
           <p className="mb-4">
-            At Calcida, accuracy is our highest priority. We follow a multi-step verification process for every calculator we build:
+            Our tools execute standard industry formulas locally on your device. We prioritize three core pillars:
           </p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Formula Verification:</strong> Every calculator is built using standard industry formulas, cross-referenced against financial textbooks and official institutional benchmarks.</li>
-            <li><strong>Strict Testing:</strong> We perform rigorous edge-case testing to ensure our tools remain accurate even with extreme or unusual inputs.</li>
-            <li><strong>Official Data Sources:</strong> For tax and salary tools, we use official IRS publications, state-level tax tables, and government-issued payroll standards.</li>
-            <li><strong>Continuous Monitoring:</strong> We regularly monitor financial regulations and interest rate environments to ensure our assumptions remain current.</li>
+          <ul className="list-none pl-0 mb-6 space-y-4">
+            <li className="bg-gray-50 p-4 rounded-md border border-gray-200">
+              <strong className="text-gray-900 block mb-1">1. Absolute Privacy</strong> 
+              Because the math executes directly in your browser, your sensitive financial inputs (like your salary or mortgage details) never leave your device. We do not store, track, or sell your financial data.
+            </li>
+            <li className="bg-gray-50 p-4 rounded-md border border-gray-200">
+              <strong className="text-gray-900 block mb-1">2. Transparent Methodologies</strong> 
+              We do not hide our math. Every calculator page explicitly details the exact mathematical formulas used to derive the estimates, empowering you to reconstruct the calculations if desired.
+            </li>
+            <li className="bg-gray-50 p-4 rounded-md border border-gray-200">
+              <strong className="text-gray-900 block mb-1">3. Institutional-Grade Formulas</strong> 
+              Our engines utilize the exact same amortization, present value, and compound interest equations used by traditional underwriters and loan officers.
+            </li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">Our Commitment to Updates</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 text-gray-900">How Data and Formulas Are Maintained</h2>
           <p className="mb-4">
-            The financial landscape is constantly changing. We are committed to maintaining the long-term reliability of our tools through:
+            To ensure the integrity of our tools, we follow a strict deployment pipeline:
           </p>
           <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Annual Reviews:</strong> All tax-related calculators are updated annually to reflect the latest tax brackets, standard deductions, and contribution limits.</li>
-            <li><strong>Regular Audits:</strong> Our core calculation engines undergo periodic audits to ensure they still meet our high standards for precision and performance.</li>
-            <li><strong>User Feedback:</strong> We actively listen to our users. If a potential discrepancy is reported, our engineering team investigates and resolves it with the highest priority.</li>
+            <li><strong>Benchmarking:</strong> Every new calculator is cross-referenced against institutional outputs (e.g., matching our mortgage calculator against a primary lender's official Good Faith Estimate).</li>
+            <li><strong>Regulatory Updates:</strong> Tax algorithms and contribution limits (401k, IRA, HSA) are strictly tied to official IRS publications. We never use arbitrary approximations when authoritative data exists.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">Why Trust Calcida?</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 text-gray-900">Our Unwavering Commitment to Updates</h2>
           <p className="mb-4">
-            We know that when it comes to money, accuracy is everything. We prioritize objective math over marketing.
+            A calculator is only as trustworthy as its latest update. Calcida is committed to a robust maintenance schedule:
           </p>
           <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>No Hidden Agendas:</strong> Our calculators run on standard industry formulas. We test our logic strictly against financial textbooks and institutional benchmarks.</li>
-            <li><strong>Strict Methodology:</strong> Tax brackets, standard deductions, and calculation limits are updated annually based on official IRS publications.</li>
-            <li><strong>Educational Focus:</strong> We provide these tools strictly for educational and informational purposes, helping you understand the <em>"what ifs"</em> before you speak to a qualified professional.</li>
+            <li><strong>Annual Mandates:</strong> Federal tax brackets, standard deductions, and retirement limits are updated at the start of every calendar year.</li>
+            <li><strong>Algorithmic Audits:</strong> Mathematical engines govern our platform. Our engineering team routinely stress-tests these algorithms against edge cases to guarantee stability.</li>
+            <li><strong>User-Driven Corrections:</strong> We operate with humility. If a user flags a methodological discrepancy, it immediately escalates to our core engineering team for verification and public correction.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">How Our Calculators Work</h2>
-          <p className="mb-4">
-            Our tools are built using modern web technologies to deliver precise estimates:
-          </p>
-          <ul className="list-disc pl-6 mb-6 space-y-2">
-            <li><strong>Accuracy First:</strong> Vigorous edge-case testing prevents math breakdowns on extreme inputs.</li>
-            <li><strong>Simplicity:</strong> Clean interfaces that ask only for the variables strictly necessary to produce a meaningful estimate.</li>
-            <li><strong>Speed & Privacy:</strong> Calculations happen instantly and locally in your browser without page reloads. We do <strong>not</strong> store or sell the financial data you input.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">Learn More About Our Standards</h2>
-          <p className="mb-4">
-            For a full breakdown of how we build, test, and maintain our calculators and articles, please read our comprehensive <Link href="/editorial-policy" className="text-blue-600 font-semibold hover:underline">Editorial & Methodology Policy</Link>.
-          </p>
-
-          <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-900">Contact Us</h2>
-          <p className="mb-4">
-            Have a suggestion, feedback, or found a bug in a calculator? We take mathematical discrepancies seriously. Please visit our <Link href="/contact" className="text-blue-600 hover:underline">Contact page</Link> to report any issues or get in touch.
-          </p>
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-6 mt-12 mb-8">
+            <h3 className="text-xl font-bold text-blue-900 mb-3">Learn More About Our Standards</h3>
+            <p className="text-sm text-blue-800 mb-0">
+              To understand our core principles regarding review structures, editorial independence, and calculation warnings, please read our strict <Link href="/editorial-policy" className="font-bold underline hover:text-blue-700">Editorial & Methodology Policy</Link>.
+            </p>
+          </div>
         </div>
       </div>
     </>

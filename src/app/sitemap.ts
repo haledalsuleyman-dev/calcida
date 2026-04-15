@@ -1,9 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getSortedPostsData } from '@/lib/blog';
-import { salaryData } from '@/data/salaryYearToHour';
-import { hourlyToYearData } from '@/data/hourlyToYear';
-import { monthlyToHourlyData } from '@/data/monthlyToHourly';
-import { biweeklyToHourlyData } from '@/data/biweeklyToHourly';
+
 import { getSiteUrl } from '@/lib/utils';
 import { CALCULATOR_SPECS } from '@/lib/calculatorSpecs';
 import fs from 'node:fs';
@@ -13,6 +10,20 @@ const APP_DIR = path.join(process.cwd(), 'src', 'app');
 const EXCLUDED_STATIC_ROUTES = new Set<string>([
   '/mortgage-refinance-calculator',
   '/loan-interest-calculator',
+  '/mortgage/200000-mortgage-payment',
+  '/mortgage/300000-mortgage-payment',
+  '/mortgage/400000-mortgage-payment',
+  '/mortgage/how-much-house-can-i-afford-on-70000-salary',
+  '/loan/10000-loan-monthly-payment',
+  '/loan/20000-loan-payment',
+  '/loan/personal-loan-interest-example',
+  '/salary/20-an-hour-is-how-much-a-year',
+  '/salary/25-an-hour-is-how-much-a-year',
+  '/salary/50000-to-hourly',
+  '/salary/60000-after-tax',
+  '/salary/70000-after-tax',
+  '/salary/70000-monthly-pay',
+  '/salary/80000-after-tax',
 ]);
 
 function hasAppPageForRoute(route: `/${string}`): boolean {
@@ -90,41 +101,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '/' ? 1 : route.includes('blog/') ? 0.75 : 0.8,
   }));
 
-  const salaryPageUrls = salaryData.map((salary) => ({
-    url: `${baseUrl}/${salary}-a-year-is-how-much-an-hour`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  const hourlyPageUrls = hourlyToYearData.map((item) => ({
-    url: `${baseUrl}/${item.hourly}-an-hour-is-how-much-a-year`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  const monthlyPageUrls = monthlyToHourlyData.map((item) => ({
-    url: `${baseUrl}/${item.monthly}-a-month-is-how-much-an-hour`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  const biweeklyPageUrls = biweeklyToHourlyData.map((item) => ({
-    url: `${baseUrl}/${item.biweekly}-every-two-weeks-is-how-much-an-hour`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
   const entries: MetadataRoute.Sitemap = [
     ...staticPageUrls,
     ...calculatorUrls,
-    ...salaryPageUrls,
-    ...hourlyPageUrls,
-    ...monthlyPageUrls,
-    ...biweeklyPageUrls,
     ...blogUrls,
   ];
 
