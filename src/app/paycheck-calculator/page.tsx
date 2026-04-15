@@ -2,7 +2,7 @@ import { CalculatorPage } from '@/components/CalculatorPage';
 import { PaycheckCalculator } from '@/components/calculators/salary/PaycheckCalculator';
 import { getCalculatorSpec } from '@/lib/calculatorSpecs';
 import type { JsonLdFaqItem } from '@/lib/jsonld';
-import { absoluteUrl } from '@/lib/seo';
+import { calculatorMetadata } from '@/lib/seo';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';

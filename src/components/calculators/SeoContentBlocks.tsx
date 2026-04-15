@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { SeoIntro, SeoFormula, SeoExample } from '@/lib/calculatorSeoContent';
+
 export function CalculatorIntro({
   description,
   intro,

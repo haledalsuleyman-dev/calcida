@@ -436,10 +436,6 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20 px-8 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95"
                 onClick={handleDownloadCSV}
              >
-               Full Report
-             </Button>
-          </div>
-        </div>
                Download CSV
              </Button>
           </div>
