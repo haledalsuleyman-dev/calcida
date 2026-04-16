@@ -64,14 +64,14 @@ export function CalculatorLayout({
               <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors">
                 Home
               </Link>
-              <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+              <svg className="w-4 h-4 text-gray-300 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
             </li>
             {category ? (
               <li className="flex items-center gap-x-3">
                 <Link href={category.href} className="text-gray-600 hover:text-blue-600 transition-colors">
                   {category.name}
                 </Link>
-                <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                <svg className="w-4 h-4 text-gray-300 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
               </li>
             ) : null}
             <li className="text-gray-900 truncate max-w-[150px] md:max-w-none" aria-current="page">

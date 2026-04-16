@@ -123,7 +123,7 @@ export default async function HomePage() {
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
             Updated for {currentYear} — Free &amp; No Sign-Up Required
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight text-balance leading-none">
             Free Financial Calculators
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">

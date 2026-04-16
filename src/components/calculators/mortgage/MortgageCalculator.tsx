@@ -7,6 +7,7 @@ const MortgagePieChart = dynamic(() => import('./MortgagePieChart'), {
   ssr: false,
   loading: () => <div className="h-full w-full flex items-center justify-center bg-gray-50 rounded-full border border-dashed border-gray-200 text-gray-400 text-xs">Loading Chart...</div>
 });
+import { en } from '@/lib/dictionaries/en';
 import { ClientOnlyChart } from '@/components/charts/ClientOnlyChart';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -27,6 +28,8 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 interface MortgageCalculatorProps {
   showExtraPayment?: boolean;
   showBiWeekly?: boolean;
+  locale?: 'en' | 'ar';
+  dictionary?: any;
   defaultValues?: {
     homePrice?: number;
     downPayment?: number;
@@ -35,11 +38,14 @@ interface MortgageCalculatorProps {
   };
 }
 
-export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValues }: MortgageCalculatorProps) {
+export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValues, locale, dictionary }: MortgageCalculatorProps) {
   // New State for Home Price & Down Payment
   const initialHomePrice = defaultValues?.homePrice ?? 400000;
   const initialDownPayment = defaultValues?.downPayment ?? 80000;
   const initialDownPaymentPercent = initialHomePrice > 0 ? (initialDownPayment / initialHomePrice) * 100 : 20;
+
+  const dict = dictionary || en;
+  const isAr = locale === 'ar';
 
   const [homePrice, setHomePrice] = useState(initialHomePrice);
   const [downPayment, setDownPayment] = useState(initialDownPayment);
@@ -132,7 +138,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
   const hasSavings = result.savings > 0;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12">
+    <div className={`grid gap-8 lg:grid-cols-12 ${isAr ? 'rtl' : ''}`} dir={isAr ? 'rtl' : 'ltr'}>
       {/* Inputs Section */}
       <div className="lg:col-span-4 space-y-6">
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
@@ -140,12 +146,12 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
             
             {/* Home Price */}
             <div>
-              <Label htmlFor="homePrice">Home Price ($)</Label>
+              <Label htmlFor="homePrice">{dict.mortgage.homePrice} ($)</Label>
               <Input
                 id="homePrice"
                 type="number"
                 min={0}
-                placeholder="e.g., 400000"
+                placeholder={dict.mortgage.homePricePlaceholder}
                 value={homePrice}
                 onChange={(e) => {
                   const val = Math.max(0, Number(e.target.value));
@@ -183,7 +189,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                         }}
                         className={`px-2 py-1 ${downPaymentMode === 'amount' ? 'bg-blue-100 text-blue-700 font-medium' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}
                     >
-                        Amount
+                        {dict.mortgage.amount}
                     </button>
                     <button 
                         onClick={() => {
@@ -196,7 +202,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                         }}
                         className={`px-2 py-1 ${downPaymentMode === 'percent' ? 'bg-blue-100 text-blue-700 font-medium' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}
                     >
-                        Percent
+                        {dict.mortgage.percent}
                     </button>
                 </div>
               </div>
@@ -221,29 +227,29 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                     }
                 }}
               />
-              <p className="text-xs text-gray-500 mt-1">20% down avoids PMI in many cases.</p>
+              <p className="text-xs text-gray-500 mt-1">{dict.mortgage.downPaymentHelper}</p>
             </div>
 
             {/* Loan Term */}
             <div>
-              <Label htmlFor="loanTermYears">Loan Term (Years)</Label>
+              <Label htmlFor="loanTermYears">{dict.mortgage.loanTerm}</Label>
               <Select value={String(loanTermYears)} onValueChange={(v) => setLoanTermYears(Number(v))}>
                 <SelectTrigger className="mt-1">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="30">30 Years</SelectItem>
-                  <SelectItem value="20">20 Years</SelectItem>
-                  <SelectItem value="15">15 Years</SelectItem>
-                  <SelectItem value="10">10 Years</SelectItem>
+                  <SelectItem value="30">30 {dict.mortgage.years}</SelectItem>
+                  <SelectItem value="20">20 {dict.mortgage.years}</SelectItem>
+                  <SelectItem value="15">15 {dict.mortgage.years}</SelectItem>
+                  <SelectItem value="10">10 {dict.mortgage.years}</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-gray-500 mt-1">Shorter terms increase payment but cut total interest.</p>
+              <p className="text-xs text-gray-500 mt-1">{dict.mortgage.loanTermHelper}</p>
             </div>
 
             {/* Interest Rate */}
             <div>
-              <Label htmlFor="interestRate">Interest Rate (%)</Label>
+              <Label htmlFor="interestRate">{dict.mortgage.interestRate}</Label>
               <Input
                 id="interestRate"
                 type="number"
@@ -257,12 +263,12 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
             </div>
 
             <div className="pt-4 border-t border-gray-100">
-                <h4 className="font-medium mb-3 text-sm text-gray-500 uppercase tracking-wide">Taxes & Fees</h4>
+                <h4 className="font-medium mb-3 text-sm text-gray-500 uppercase tracking-wide">{dict.mortgage.taxesAndFees}</h4>
                 
                 {/* Property Tax */}
                 <div className="mb-4">
                   <div className="flex justify-between items-center mb-1">
-                    <Label htmlFor="propertyTax">Property Tax / Year</Label>
+                    <Label htmlFor="propertyTax">{dict.mortgage.propertyTax}</Label>
                     <div className="flex text-xs border rounded overflow-hidden">
                         <button 
                             onClick={() => {
@@ -271,7 +277,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                             }}
                             className={`px-2 py-1 ${propertyTaxMode === 'amount' ? 'bg-blue-100 text-blue-700 font-medium' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}
                         >
-                            Amount
+                            {dict.mortgage.amount}
                         </button>
                         <button 
                             onClick={() => {
@@ -284,7 +290,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                             }}
                             className={`px-2 py-1 ${propertyTaxMode === 'percent' ? 'bg-blue-100 text-blue-700 font-medium' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}
                         >
-                            Percent
+                            {dict.mortgage.percent}
                         </button>
                     </div>
                   </div>
@@ -309,12 +315,12 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                         }
                     }}
                   />
-                  <p className="text-xs text-gray-500 mt-1">If percent, we estimate based on home price.</p>
+                  <p className="text-xs text-gray-500 mt-1">{dict.mortgage.propertyTaxHelper}</p>
                 </div>
 
                 {/* Home Insurance */}
                 <div className="mb-4">
-                    <Label htmlFor="insuranceYearly">Home Insurance / Year ($)</Label>
+                    <Label htmlFor="insuranceYearly">{dict.mortgage.homeInsurance} ($)</Label>
                     <Input
                         id="insuranceYearly"
                         type="number"
@@ -328,7 +334,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
 
                 {/* HOA */}
                 <div>
-                    <Label htmlFor="hoaMonthly">HOA / Monthly ($)</Label>
+                    <Label htmlFor="hoaMonthly">{dict.mortgage.hoaFees} ($)</Label>
                     <Input
                         id="hoaMonthly"
                         type="number"
@@ -344,7 +350,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
             {/* Optional Extra Payment Inputs */}
             {(showExtraPayment || extraPayment > 0) && (
                  <div className="pt-4 border-t border-gray-100">
-                  <Label htmlFor="extraPayment">Extra Monthly Payment ($)</Label>
+                  <Label htmlFor="extraPayment">{dict.mortgage.extraPayment} ($)</Label>
                   <Input
                     id="extraPayment"
                     type="number"
@@ -354,23 +360,23 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                     onChange={(e) => setExtraPayment(Math.max(0, Number(e.target.value)))}
                     className="mt-1"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Applied toward principal each period.</p>
+                  <p className="text-xs text-gray-500 mt-1">{dict.mortgage.extraPaymentHelper}</p>
                 </div>
             )}
 
             {(showBiWeekly || paymentFrequency === 'biweekly') && (
                  <div className="pt-4 border-t border-gray-100">
-                  <Label htmlFor="paymentFrequency">Payment Frequency</Label>
+                  <Label htmlFor="paymentFrequency">{dict.mortgage.paymentFrequency}</Label>
                   <Select value={paymentFrequency} onValueChange={(v) => setPaymentFrequency(v as 'monthly' | 'biweekly')}>
                     <SelectTrigger className="mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="biweekly">Bi-Weekly</SelectItem>
+                      <SelectItem value="monthly">{dict.mortgage.monthly}</SelectItem>
+                      <SelectItem value="biweekly">{dict.mortgage.biweekly}</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-xs text-gray-500 mt-1">Biweekly means 26 payments per year.</p>
+                  <p className="text-xs text-gray-500 mt-1">{dict.mortgage.biweeklyHelper}</p>
                 </div>
             )}
 
@@ -386,7 +392,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           
           <h2 className="text-lg font-bold text-blue-100 mb-2 relative z-10">
-            {paymentFrequency === 'biweekly' ? 'Estimated Bi-Weekly Payment' : 'Estimated Monthly Payment'}
+            {paymentFrequency === 'biweekly' ? dict.mortgage.results.biweeklyPayment : dict.mortgage.results.monthlyPayment}
           </h2>
           <div className="text-6xl md:text-7xl font-black text-white tracking-tighter relative z-10 mb-8 animate-in zoom-in-95 duration-500">
             {paymentFrequency === 'biweekly' && result.biWeeklyPayment 
@@ -397,7 +403,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
           {/* Comparison for Bi-Weekly */}
           {paymentFrequency === 'biweekly' && (
               <div className="mb-8 p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10 text-white relative z-10">
-                  <span className="font-bold opacity-70 uppercase tracking-widest text-xs block mb-1">Standard Monthly</span>
+                  <span className="font-bold opacity-70 uppercase tracking-widest text-xs block mb-1">{dict.mortgage.results.standardMonthly}</span>
                   <span className="text-xl font-black">{formatCurrency(result.totalMonthlyPayment)}</span>
               </div>
           )}
@@ -408,10 +414,12 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                       <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
                         <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
                       </div>
-                      Save {formatCurrency(result.savings)}
+                      {dict.mortgage.results.save.replace('{amount}', formatCurrency(result.savings))}
                   </div>
                   <div className="text-gray-600 leading-relaxed pl-10 capitalize font-medium">
-                      Pay off your mortgage <span className="text-gray-900 font-black">{Math.floor(result.payoffMonths / 12)} years and {result.payoffMonths % 12} months</span> sooner.
+                      {dict.mortgage.results.payoffSummary
+                        .replace('{years}', Math.floor(result.payoffMonths / 12).toString())
+                        .replace('{months}', (result.payoffMonths % 12).toString())}
                   </div>
               </div>
           )}
@@ -422,13 +430,13 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                 className="bg-white text-blue-700 hover:bg-blue-50 px-10 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95 shadow-xl shadow-black/10"
                 onClick={() => {
                     const text = paymentFrequency === 'biweekly' 
-                        ? `My estimated bi-weekly mortgage payment is ${formatCurrency(result.biWeeklyPayment || 0)}`
-                        : `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
+                        ? `${isAr ? 'دفعتي المتوقعة كل أسبوعين هي' : 'My estimated bi-weekly mortgage payment is'} ${formatCurrency(result.biWeeklyPayment || 0)}`
+                        : `${isAr ? 'دفعتي الشهرية المتوقعة هي' : 'My estimated monthly mortgage payment is'} ${formatCurrency(result.totalMonthlyPayment)}`;
                     navigator.clipboard.writeText(text);
-                    alert("Result copied to clipboard!");
+                    alert(dict.common.copied);
                 }}
              >
-               Share Results
+               {dict.mortgage.results.share}
              </Button>
              <Button 
                 variant="outline" 
@@ -436,7 +444,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20 px-8 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95"
                 onClick={handleDownloadCSV}
              >
-               Download CSV
+               {dict.mortgage.results.download}
              </Button>
           </div>
         </div>
@@ -444,7 +452,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
         {/* Visual Breakdown */}
         <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold mb-6">Payment Breakdown</h3>
+                <h3 className="text-lg font-semibold mb-6">{dict.mortgage.results.breakdown}</h3>
                 <div className="h-[250px] min-h-[250px]">
                     <ClientOnlyChart className="h-full">
                         <MortgagePieChart data={chartData} />
@@ -453,38 +461,40 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
             </div>
             
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold mb-4">Detailed Costs ({paymentFrequency === 'biweekly' ? 'Monthly Avg' : 'Monthly'})</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  {dict.mortgage.results.detailedCosts.replace('{mode}', paymentFrequency === 'biweekly' ? (isAr ? 'متوسط شهري' : 'Monthly Avg') : (isAr ? 'شهري' : 'Monthly'))}
+                </h3>
                 <div className="space-y-3">
                     <div className="flex justify-between border-b border-gray-100 pb-2">
                         <span className="text-gray-600 flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-blue-500"></span>
-                            Principal & Interest
+                            {dict.mortgage.results.principalInterest}
                         </span>
                         <span className="font-medium">{formatCurrency(result.monthlyPrincipalAndInterest)}</span>
                     </div>
                     <div className="flex justify-between border-b border-gray-100 pb-2">
                         <span className="text-gray-600 flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                            Property Tax
+                            {dict.mortgage.propertyTax.split('/')[0]}
                         </span>
                         <span className="font-medium">{formatCurrency(result.monthlyPropertyTax)}</span>
                     </div>
                     <div className="flex justify-between border-b border-gray-100 pb-2">
                         <span className="text-gray-600 flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                            Home Insurance
+                            {dict.mortgage.homeInsurance.split('/')[0]}
                         </span>
                         <span className="font-medium">{formatCurrency(result.monthlyInsurance)}</span>
                     </div>
                     <div className="flex justify-between border-b border-gray-100 pb-2">
                         <span className="text-gray-600 flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                            HOA Fees
+                            {dict.mortgage.hoaFees.split('/')[0]}
                         </span>
                         <span className="font-medium">{formatCurrency(result.monthlyHOA)}</span>
                     </div>
                     <div className="flex justify-between pt-2 font-bold text-lg mt-4">
-                        <span>Total Monthly</span>
+                        <span>{dict.mortgage.results.totalMonthly}</span>
                         <span>{formatCurrency(result.totalMonthlyPayment)}</span>
                     </div>
                 </div>
@@ -495,34 +505,36 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-600"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                Key Insights
+                {dict.mortgage.insights.title}
             </h3>
             <ul className="space-y-2 text-gray-700">
                 <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
                     <span>
-                        Over the life of this {loanTermYears}-year loan, you will pay a total of <span className="font-bold">{formatCurrency(totalInterest)}</span> in interest.
+                        {dict.mortgage.insights.totalInterest
+                            .replace('{years}', loanTermYears.toString())
+                            .replace('{amount}', formatCurrency(totalInterest))}
                     </span>
                 </li>
                 <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
                     <span>
-                        Your loan-to-value (LTV) ratio is <span className="font-bold">{((homePrice - downPayment) / homePrice * 100).toFixed(1)}%</span>. 
-                        {((homePrice - downPayment) / homePrice * 100) > 80 ? " Since your down payment is less than 20%, you may be required to pay Private Mortgage Insurance (PMI)." : " Great job! With a down payment of 20% or more, you avoid PMI costs."}
+                        {dict.mortgage.insights.ltv.replace('{percent}', ((homePrice - downPayment) / homePrice * 100).toFixed(1))} 
+                        {((homePrice - downPayment) / homePrice * 100) > 80 ? ` ${dict.mortgage.insights.pmiWarning}` : ` ${dict.mortgage.insights.pmiSuccess}`}
                     </span>
                 </li>
                 {paymentFrequency === 'biweekly' && hasSavings ? (
                     <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
                         <span>
-                            By paying bi-weekly, you are effectively making <span className="font-bold">13 full payments</span> per year instead of 12, which accelerates your payoff.
+                            {dict.mortgage.insights.biweeklyInsight}
                         </span>
                     </li>
                 ) : (
                     <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
                         <span>
-                            For every $10,000 you increase your down payment, your monthly payment decreases by approximately <span className="font-bold">{formatCurrency(calculateMortgage({ loanAmount: 10000, interestRate, loanTermYears }).monthlyPrincipalAndInterest)}</span>.
+                            {dict.mortgage.insights.downPaymentImpact.replace('{amount}', formatCurrency(calculateMortgage({ loanAmount: 10000, interestRate, loanTermYears }).monthlyPrincipalAndInterest))}
                         </span>
                     </li>
                 )}
@@ -534,20 +546,24 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
       {/* StickyResultBar */}
       {result && (
         <StickyResultBar
-          label={paymentFrequency === 'biweekly' ? 'Estimated Bi-Weekly Payment' : 'Estimated Monthly Payment'}
+          label={paymentFrequency === 'biweekly' ? dict.mortgage.sticky.biweekly : dict.mortgage.sticky.monthly}
           value={paymentFrequency === 'biweekly' ? (result.biWeeklyPayment || 0) : result.totalMonthlyPayment}
-          secondaryLabel={paymentFrequency === 'biweekly' ? 'Standard Monthly' : undefined}
+          secondaryLabel={paymentFrequency === 'biweekly' ? dict.mortgage.sticky.standard : undefined}
           secondaryValue={paymentFrequency === 'biweekly' ? result.totalMonthlyPayment : undefined}
           triggerRef={resultCardRef}
           onCopy={() => {
             if (paymentFrequency === 'biweekly') {
-                 const text = `Loan Amount: ${formatCurrency(homePrice - downPayment)}\nRate: ${interestRate}%\nTerm: ${loanTermYears} years\nBi-Weekly Payment: ${formatCurrency(result.biWeeklyPayment || 0)}\nStandard Monthly: ${formatCurrency(result.totalMonthlyPayment)}\nInterest Saved: ${formatCurrency(result.savings)}\nTime Saved: ${Math.floor(result.payoffMonths / 12)} years ${result.payoffMonths % 12} months`;
+                 const text = isAr 
+                    ? `مبلغ القرض: ${formatCurrency(homePrice - downPayment)}\nالفائدة: ${interestRate}%\nالمدة: ${loanTermYears} سنة\nالدفعة كل أسبوعين: ${formatCurrency(result.biWeeklyPayment || 0)}\nالدفعة الشهرية: ${formatCurrency(result.totalMonthlyPayment)}\nالفائدة الموفرة: ${formatCurrency(result.savings)}\nالوقت الموفر: ${Math.floor(result.payoffMonths / 12)} سنوات ${result.payoffMonths % 12} أشهر`
+                    : `Loan Amount: ${formatCurrency(homePrice - downPayment)}\nRate: ${interestRate}%\nTerm: ${loanTermYears} years\nBi-Weekly Payment: ${formatCurrency(result.biWeeklyPayment || 0)}\nStandard Monthly: ${formatCurrency(result.totalMonthlyPayment)}\nInterest Saved: ${formatCurrency(result.savings)}\nTime Saved: ${Math.floor(result.payoffMonths / 12)} years ${result.payoffMonths % 12} months`;
                  navigator.clipboard.writeText(text);
-                 alert("Copied bi-weekly summary!");
+                 alert(dict.common.copied);
             } else {
-                 const text = `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
+                 const text = isAr 
+                    ? `دفعتي الشهرية المتوقعة للرهن العقاري هي ${formatCurrency(result.totalMonthlyPayment)}`
+                    : `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
                  navigator.clipboard.writeText(text);
-                 alert("Result copied to clipboard!");
+                 alert(dict.common.copied);
             }
           }}
         />

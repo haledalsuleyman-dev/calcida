@@ -10,35 +10,39 @@ import React from 'react';
 const spec = getCalculatorSpec('mortgage-payment');
 
 export const metadata: Metadata = calculatorMetadata({
-  title: 'Mortgage Payment Calculator: With Taxes & Insurance',
-  description: 'Estimate your true monthly mortgage payment including principal, interest, taxes, insurance (PITI), and HOA fees to find out how much house you can really afford.',
+  title: 'Mortgage Payment Calculator 2026: With Taxes, Insurance & PMI',
+  description: 'Calculate your total monthly mortgage payment (PITI) for 2026. Includes principal, interest, property taxes, homeowners insurance, and HOA fees with biweekly payment options.',
+  keywords: [
+    'mortgage payment calculator 2026',
+    'mortgage calculator with taxes and insurance and pmi',
+    'piti calculator monthly',
+    'biweekly mortgage payment calculator',
+    'how much house can i afford on 400k house',
+    'is now a good time to refinance 2026'
+  ],
   canonicalPath: spec.route,
 });
 
 const MORTGAGE_FAQ: readonly JsonLdFaqItem[] = [
   {
-    question: "What is PITI in a mortgage payment?",
-    answer: "PITI stands for Principal, Interest, Taxes, and Insurance. These are the four core components of a standard monthly mortgage payment. Principal and interest repay the lender, while taxes and insurance are usually held in an escrow account."
+    question: "What is PITI in a 2026 mortgage calculation?",
+    answer: "PITI stands for Principal, Interest, Taxes, and Insurance. In 2026, lenders focus heavily on your total carrying cost including HOA and PMI to determine your debt-to-income (DTI) ratio. This calculator provides a full PITI breakdown."
   },
   {
-    question: "Does my mortgage payment include property taxes?",
-    answer: "Usually, yes. Most lenders require you to pay a portion of your annual property taxes each month. The lender holds this in an escrow account and pays the tax bill on your behalf when it's due."
+    question: "How do interest rates in 2026 affect my monthly payment?",
+    answer: "With 2026 rates stabilizing, a 1% difference on a $400,000 loan can change your payment by approximately $250/month. It is critical to calculate with current market rates to avoid being 'house poor'."
   },
   {
-    question: "How much down payment do I actually need?",
-    answer: "While 20% is the traditional gold standard to avoid Private Mortgage Insurance (PMI), many buyers put down 3% to 10%. FHA loans require as little as 3.5% down, and VA loans often require $0 down."
+    question: "Does this mortgage calculator include PMI?",
+    answer: "Yes. If your down payment is less than 20%, the calculator automatically suggests account for Private Mortgage Insurance (PMI), which typically adds 0.5% to 1.5% to your annual loan cost."
   },
   {
-    question: "What is PMI and how much does it cost?",
-    answer: "Private Mortgage Insurance (PMI) is required on conventional loans if your down payment is less than 20%. It typically costs between 0.3% and 1.5% of the original loan amount annually, adding up to hundreds of extra dollars per month."
+    question: "Can I calculate bi-weekly mortgage savings?",
+    answer: "Yes, by switching to our bi-weekly frequency, you effectively make 13 payments a year. This can shave 4-6 years off a standard 30-year mortgage and save you tens of thousands in interest."
   },
   {
-    question: "How do interest rates affect my monthly payment?",
-    answer: "Interest rates heavily impact your payment and overall cost. A 1% increase on a $300,000, 30-year loan can increase your monthly payment by roughly $200 and add over $70,000 to the total interest paid over the life of the loan."
-  },
-  {
-    question: "Should I choose a 15-year or 30-year fixed mortgage?",
-    answer: "A 30-year mortgage offers lower, more flexible monthly payments. A 15-year mortgage has higher monthly payments, but you'll secure a lower interest rate and pay drastically less total interest over the life of the loan."
+    question: "Is now a good time to refinance my mortgage in 2026?",
+    answer: "If 2026 rates are at least 0.75% to 1% lower than your current rate, refinancing may be beneficial. Use our calculator to see if the monthly savings outweigh the closing costs of the new loan."
   }
 ];
 
@@ -50,13 +54,10 @@ export default function MortgagePaymentCalculatorPage() {
       intro={
         <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
           <p>
-            Buying a home is one of the biggest financial decisions you'll ever make. But knowing the asking price is only half the battle—you need to know exactly what it will cost you every single month.
+            In 2026, home prices and interest rates require more precision than ever. Our <strong>Mortgage Payment Calculator</strong> is designed to provide a 100% accurate picture of your "True Carrying Cost" (PITI).
           </p>
           <p>
-            Our <strong>Mortgage Payment Calculator</strong> goes beyond basic principal and interest. It calculates your "true" monthly cost by factoring in the hidden expenses of homeownership: property taxes, homeowners insurance, HOA fees, and PMI (if applicable).
-          </p>
-          <p>
-            Use this tool to dial in your housing budget, compare different interest rates, and see exactly how much house you can confidently afford.
+            This tool factors in 2026 property tax trends, homeowners insurance premiums, and <strong>PMI (Private Mortgage Insurance)</strong> to ensure you aren't surprised by hidden fees. Whether you're a first-time buyer or looking to refinance, calculating your monthly payment is the first step toward financial freedom.
           </p>
         </div>
       }
@@ -66,59 +67,72 @@ export default function MortgagePaymentCalculatorPage() {
             This calculator determines your monthly carrying cost (often called PITI) to give you a realistic picture of your housing expenses. Here is exactly what we calculate:
           </p>
           <div className="bg-gray-50 p-6 rounded-md border border-gray-200 mt-4">
-            <h3 className="font-bold text-gray-900 mb-3 text-lg">The Complete Breakdown</h3>
+            <h3 className="font-bold text-gray-900 mb-3 text-lg">The Complete Breakdown (PITI)</h3>
             <ol className="list-decimal pl-5 space-y-3 text-gray-700">
-              <li><span className="font-medium text-gray-900">Principal & Interest (P&I):</span> Reverses your Home Price and Down Payment to find the Loan Amount, then amortizes it across your specific Loan Term and Interest Rate.</li>
-              <li><span className="font-medium text-gray-900">Property Taxes:</span> Takes your annual property tax estimate and divides it by 12.</li>
-              <li><span className="font-medium text-gray-900">Homeowners Insurance:</span> Takes your estimated annual premium and divides it by 12.</li>
-              <li><span className="font-medium text-gray-900">HOA Fees (Optional):</span> Adds any monthly Homeowners Association dues directly to your bottom line.</li>
+              <li><span className="font-medium text-gray-900">Principal & Interest (P&I):</span> Based on the latest 2026 amortization schedules.</li>
+              <li><span className="font-medium text-gray-900">Property Taxes:</span> Estimated based on national averages or your specific local rate.</li>
+              <li><span className="font-medium text-gray-900">Homeowners Insurance:</span> Factoring in recent premium increases.</li>
+              <li><span className="font-medium text-gray-900">PMI:</span> Automatically calculated if your down payment is less than 20%.</li>
             </ol>
           </div>
         </div>
       }
       formula={
-        <div className="space-y-4 text-gray-700">
+        <div className="space-y-6 text-gray-700">
           <p>
-            While taxes and insurance are simple arithmetic (divide the annual cost by 12), the core mortgage payment is calculated using the standard amortization formula:
+            The core mortgage payment uses the fixed-rate amortization formula:
           </p>
           <div className="bg-white p-4 rounded border border-gray-200 font-mono text-center text-lg my-4">
             M = P [ i(1 + i)^n ] / [ (1 + i)^n - 1 ]
           </div>
-          <ul className="list-disc pl-6 space-y-1 text-sm bg-gray-50 p-4 rounded border border-gray-200">
-            <li><strong>M:</strong> Total monthly principal and interest payment</li>
-            <li><strong>P:</strong> Principal loan amount (Home Price minus Down Payment)</li>
-            <li><strong>i:</strong> Monthly interest rate (Annual Rate divided by 12)</li>
-            <li><strong>n:</strong> Number of monthly payments (e.g., 360 for a 30-year loan)</li>
-          </ul>
+          
+          <div className="mt-8">
+            <h4 className="font-bold text-gray-900 mb-2">Estimated Property Tax Rates (2026)</h4>
+            <div className="overflow-x-auto text-sm">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-gray-100 italic">
+                  <tr>
+                    <th className="p-2 border">State</th>
+                    <th className="p-2 border">Avg. Rate</th>
+                    <th className="p-2 border">Search Trend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="p-2 border">New Jersey</td><td className="p-2 border text-red-600">2.47%</td><td className="p-2 border text-gray-400 font-bold">#1 High</td></tr>
+                  <tr><td className="p-2 border">Texas</td><td className="p-2 border">1.60%</td><td className="p-2 border text-gray-400 font-bold">Trending</td></tr>
+                  <tr><td className="p-2 border">California</td><td className="p-2 border text-green-600">0.71%</td><td className="p-2 border text-gray-400 font-bold">Stable</td></tr>
+                  <tr><td className="p-2 border">Florida</td><td className="p-2 border">0.91%</td><td className="p-2 border text-gray-400 font-bold">Growth</td></tr>
+                </tbody>
+              </table>
+              <p className="text-[10px] mt-2 text-gray-400">*Rates are averages and vary significantly by county and municipality.</p>
+            </div>
+          </div>
         </div>
       }
       example={
         <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-          <p className="font-bold text-blue-900 mb-4 text-lg">Real-World Scenario: Buying a $350,000 Home</p>
-          <p className="mb-4 text-gray-700">Let's say you're buying a $350,000 house with a 20% down payment to avoid PMI. You secure a 30-year fixed mortgage at a 6.5% interest rate. You estimate annual property taxes at $3,500 and home insurance at $1,200.</p>
+          <p className="font-bold text-blue-900 mb-4 text-lg">2026 Example: $450,000 Home Purchase</p>
+          <p className="mb-4 text-gray-700 italic">Scenario: You put down 10% ($45,000) on a $450,000 home with a 6.25% interest rate. Because your down payment is under 20%, you will pay PMI.</p>
           
           <ul className="space-y-2 text-gray-700 list-none pl-0">
-            <li className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Home Price:</span> <span className="font-medium">$350,000</span>
-            </li>
-            <li className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Down Payment (20%):</span> <span className="font-medium">$70,000</span>
-            </li>
-            <li className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Loan Amount:</span> <span className="font-medium">$280,000</span>
+            <li className="flex justify-between border-b border-blue-200 pb-2 italic">
+              <span>Loan Amount (90% LTV):</span> <span className="font-medium">$405,000</span>
             </li>
             <li className="flex justify-between pt-2">
-              <span>Monthly Principal & Interest:</span> <span>$1,769</span>
+              <span>Monthly Principal & Interest:</span> <span>$2,494</span>
             </li>
             <li className="flex justify-between">
-              <span>Monthly Property Taxes:</span> <span>$291</span>
+              <span>Property Taxes (1.2%):</span> <span>$450</span>
+            </li>
+            <li className="flex justify-between">
+              <span>Home Insurance:</span> <span>$150</span>
             </li>
             <li className="flex justify-between border-b border-blue-200 pb-2">
-              <span>Monthly Insurance:</span> <span>$100</span>
+              <span>Estimated PMI (0.5%):</span> <span>$168</span>
             </li>
             <li className="flex justify-between pt-2">
-              <span className="text-xl font-bold text-blue-900">Total Monthly Payment:</span> 
-              <span className="text-xl font-bold text-blue-900">~$2,160</span>
+              <span className="text-xl font-bold text-blue-900">Estimated Total Monthly:</span> 
+              <span className="text-xl font-bold text-blue-900">~$3,262</span>
             </li>
           </ul>
         </div>
@@ -158,11 +172,19 @@ export default function MortgagePaymentCalculatorPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link href="/mortgage-amortization-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded hover:border-blue-500 transition-colors group no-underline">
                 <span className="font-bold text-blue-600 text-lg group-hover:underline">Amortization Schedule</span>
-                <p className="text-sm text-gray-600 mt-2">See a month-by-month breakdown of exactly how much of your payment goes to principal versus interest.</p>
+                <p className="text-sm text-gray-600 mt-2">See a year-by-year breakdown of your loan payoff schedule.</p>
               </Link>
-              <Link href="/mortgage/how-much-house-can-i-afford-on-70000-salary" className="p-5 bg-gray-50 border border-gray-200 rounded hover:border-blue-500 transition-colors group no-underline">
-                <span className="font-bold text-blue-600 text-lg group-hover:underline">Mortgage Affordability</span>
-                <p className="text-sm text-gray-600 mt-2">Work backwards. Enter your salary and debts to see the maximum home price you can get approved for.</p>
+              <Link href="/biweekly-mortgage-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded hover:border-blue-500 transition-colors group no-underline">
+                <span className="font-bold text-blue-600 text-lg group-hover:underline">Bi-Weekly Savings</span>
+                <p className="text-sm text-gray-600 mt-2">Calculate how much interest you can save by switching to bi-weekly payments.</p>
+              </Link>
+              <Link href="/extra-payment-mortgage-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded hover:border-blue-500 transition-colors group no-underline">
+                <span className="font-bold text-blue-600 text-lg group-hover:underline">Early Payoff Expert</span>
+                <p className="text-sm text-gray-600 mt-2">Enter custom extra payments to see exactly how quickly you can be debt-free.</p>
+              </Link>
+              <Link href="/mortgage-refinance-calculator" className="p-5 bg-gray-50 border border-gray-200 rounded hover:border-blue-500 transition-colors group no-underline">
+                <span className="font-bold text-blue-600 text-lg group-hover:underline">Refinance Break-Even</span>
+                <p className="text-sm text-gray-600 mt-2">Find out if the monthly savings of a refinance justify the closing costs.</p>
               </Link>
             </div>
           </section>

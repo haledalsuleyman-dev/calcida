@@ -56,6 +56,7 @@ export function pageMetadata(input: {
   publishedTime?: string;
   modifiedTime?: string;
   noindex?: boolean;
+  keywords?: string[];
 }): Metadata {
   const title = cleanText(input.title);
   const description = truncate(cleanText(input.description), 160);
@@ -65,6 +66,7 @@ export function pageMetadata(input: {
   return {
     title,
     description,
+    keywords: input.keywords,
     alternates: { canonical },
     ...(input.noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
@@ -91,6 +93,7 @@ export function calculatorMetadata(input: {
   title: string;
   description: string;
   canonicalPath: string;
+  keywords?: string[];
 }): Metadata {
   const canonical = absoluteUrl(input.canonicalPath);
   const isCalculator = input.canonicalPath.endsWith('-calculator');
@@ -99,6 +102,7 @@ export function calculatorMetadata(input: {
   return {
     title,
     description,
+    keywords: input.keywords,
     alternates: { canonical },
     openGraph: {
       title: composeMetaTitle(title),
