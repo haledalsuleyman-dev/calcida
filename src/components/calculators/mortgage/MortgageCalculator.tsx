@@ -28,8 +28,6 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 interface MortgageCalculatorProps {
   showExtraPayment?: boolean;
   showBiWeekly?: boolean;
-  locale?: 'en' | 'ar';
-  dictionary?: any;
   defaultValues?: {
     homePrice?: number;
     downPayment?: number;
@@ -38,14 +36,13 @@ interface MortgageCalculatorProps {
   };
 }
 
-export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValues, locale, dictionary }: MortgageCalculatorProps) {
+export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValues }: MortgageCalculatorProps) {
   // New State for Home Price & Down Payment
   const initialHomePrice = defaultValues?.homePrice ?? 400000;
   const initialDownPayment = defaultValues?.downPayment ?? 80000;
   const initialDownPaymentPercent = initialHomePrice > 0 ? (initialDownPayment / initialHomePrice) * 100 : 20;
 
-  const dict = dictionary || en;
-  const isAr = locale === 'ar';
+  const dict = en;
 
   const [homePrice, setHomePrice] = useState(initialHomePrice);
   const [downPayment, setDownPayment] = useState(initialDownPayment);
@@ -138,7 +135,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
   const hasSavings = result.savings > 0;
 
   return (
-    <div className={`grid gap-8 lg:grid-cols-12 ${isAr ? 'rtl' : ''}`} dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="grid gap-8 lg:grid-cols-12">
       {/* Inputs Section */}
       <div className="lg:col-span-4 space-y-6">
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
@@ -430,8 +427,8 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
                 className="bg-white text-blue-700 hover:bg-blue-50 px-10 h-14 rounded-2xl font-black uppercase tracking-widest active:scale-95 shadow-xl shadow-black/10"
                 onClick={() => {
                     const text = paymentFrequency === 'biweekly' 
-                        ? `${isAr ? 'دفعتي المتوقعة كل أسبوعين هي' : 'My estimated bi-weekly mortgage payment is'} ${formatCurrency(result.biWeeklyPayment || 0)}`
-                        : `${isAr ? 'دفعتي الشهرية المتوقعة هي' : 'My estimated monthly mortgage payment is'} ${formatCurrency(result.totalMonthlyPayment)}`;
+                        ? `My estimated bi-weekly mortgage payment is ${formatCurrency(result.biWeeklyPayment || 0)}`
+                        : `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
                     navigator.clipboard.writeText(text);
                     alert(dict.common.copied);
                 }}
@@ -462,7 +459,7 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
             
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h3 className="text-lg font-semibold mb-4">
-                  {dict.mortgage.results.detailedCosts.replace('{mode}', paymentFrequency === 'biweekly' ? (isAr ? 'متوسط شهري' : 'Monthly Avg') : (isAr ? 'شهري' : 'Monthly'))}
+                  {dict.mortgage.results.detailedCosts.replace('{mode}', paymentFrequency === 'biweekly' ? 'Monthly Avg' : 'Monthly')}
                 </h3>
                 <div className="space-y-3">
                     <div className="flex justify-between border-b border-gray-100 pb-2">
@@ -553,15 +550,11 @@ export function MortgageCalculator({ showExtraPayment, showBiWeekly, defaultValu
           triggerRef={resultCardRef}
           onCopy={() => {
             if (paymentFrequency === 'biweekly') {
-                 const text = isAr 
-                    ? `مبلغ القرض: ${formatCurrency(homePrice - downPayment)}\nالفائدة: ${interestRate}%\nالمدة: ${loanTermYears} سنة\nالدفعة كل أسبوعين: ${formatCurrency(result.biWeeklyPayment || 0)}\nالدفعة الشهرية: ${formatCurrency(result.totalMonthlyPayment)}\nالفائدة الموفرة: ${formatCurrency(result.savings)}\nالوقت الموفر: ${Math.floor(result.payoffMonths / 12)} سنوات ${result.payoffMonths % 12} أشهر`
-                    : `Loan Amount: ${formatCurrency(homePrice - downPayment)}\nRate: ${interestRate}%\nTerm: ${loanTermYears} years\nBi-Weekly Payment: ${formatCurrency(result.biWeeklyPayment || 0)}\nStandard Monthly: ${formatCurrency(result.totalMonthlyPayment)}\nInterest Saved: ${formatCurrency(result.savings)}\nTime Saved: ${Math.floor(result.payoffMonths / 12)} years ${result.payoffMonths % 12} months`;
+                 const text = `Loan Amount: ${formatCurrency(homePrice - downPayment)}\nRate: ${interestRate}%\nTerm: ${loanTermYears} years\nBi-Weekly Payment: ${formatCurrency(result.biWeeklyPayment || 0)}\nStandard Monthly: ${formatCurrency(result.totalMonthlyPayment)}\nInterest Saved: ${formatCurrency(result.savings)}\nTime Saved: ${Math.floor(result.payoffMonths / 12)} years ${result.payoffMonths % 12} months`;
                  navigator.clipboard.writeText(text);
                  alert(dict.common.copied);
             } else {
-                 const text = isAr 
-                    ? `دفعتي الشهرية المتوقعة للرهن العقاري هي ${formatCurrency(result.totalMonthlyPayment)}`
-                    : `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
+                 const text = `My estimated monthly mortgage payment is ${formatCurrency(result.totalMonthlyPayment)}`;
                  navigator.clipboard.writeText(text);
                  alert(dict.common.copied);
             }
